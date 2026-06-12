@@ -45,7 +45,9 @@ cursor:pointer;
 transition:.3s;
 }
 
-.sidebar li:hover
+.sidebar li:hover{
+background:#0046d5;
+}
 
 .main{
 margin-left:250px;
@@ -196,4 +198,8 @@ align-items:center;
 justify-content:center;
 font-size:28px;
 font-weight:bold;
+}
+.sidebar li:first-child{
+background:#0046d5;
+font-weight:600;
 }
