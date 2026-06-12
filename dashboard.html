@@ -211,18 +211,6 @@ font-weight:600;
 position:relative;
 }
 
-.notification-bell{
-position:relative;
-background:white;
-border:none;
-width:55px;
-height:55px;
-border-radius:50%;
-cursor:pointer;
-font-size:22px;
-box-shadow:0 8px 20px rgba(0,0,0,.12);
-}
-
 .badge{
 position:absolute;
 top:-5px;
@@ -285,20 +273,23 @@ box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
 
 .notification-bell{
-animation:ring 3s infinite;
+position:relative;
+background:white;
+border:none;
+width:55px;
+height:55px;
+border-radius:50%;
+cursor:pointer;
+font-size:22px;
+box-shadow:0 8px 20px rgba(0,0,0,.12);
+transition:all .3s ease;
 }
 
-@keyframes ring{
-
-0%{transform:rotate(0deg);}
-5%{transform:rotate(15deg);}
-10%{transform:rotate(-15deg);}
-15%{transform:rotate(10deg);}
-20%{transform:rotate(0deg);}
-100%{transform:rotate(0deg);}
-
+.notification-bell:hover{
+transform:translateY(-4px);
+box-shadow:0 15px 35px rgba(0,0,0,.15);
 }
-
+  
 .card h1{
 color:#002b7f;
 font-size:42px;
@@ -376,16 +367,16 @@ Welcome back, Nidhi Gajjar
 
 <div id="notificationDropdown" class="notification-dropdown">
 
-<div style="padding:10px 0;border-bottom:1px solid #eee;">
-Invoice INV001 Pending Approval
+<div style="padding:12px;border-radius:8px;background:#f8fafc;margin-bottom:8px;">
+📄 Invoice INV001 Pending Approval
 </div>
 
-<div style="padding:10px 0;border-bottom:1px solid #eee;">
-Visitor Request Waiting
+<div style="padding:12px;border-radius:8px;background:#f8fafc;margin-bottom:8px;">
+👤 Visitor Request Waiting
 </div>
 
-<div style="padding:10px 0;">
-Travel Request Approved
+<div style="padding:12px;border-radius:8px;background:#f8fafc;">
+✈ Travel Request Approved
 </div>
 
 </div>
@@ -400,22 +391,22 @@ Travel Request Approved
 
 <div class="card">
 <h3>Total Invoices</h3>
-<h1>150</h1>
+<h1 class="counter" data-target="150">0</h1>
 </div>
 
 <div class="card">
 <h3>Pending Approval</h3>
-<h1>20</h1>
+<h1 class="counter" data-target="20">0</h1>
 </div>
 
 <div class="card">
 <h3>Approved</h3>
-<h1>100</h1>
+<h1 class="counter" data-target="100">0</h1>
 </div>
 
 <div class="card">
 <h3>Paid</h3>
-<h1>30</h1>
+<h1 class="counter" data-target="30">0</h1>
 </div>
 
 </div>
@@ -522,15 +513,13 @@ Settings
 
 </div>
 
-<script>
+  <script>
 
 document.getElementById("bellBtn")
 .addEventListener("click",function(){
 
 const dropdown =
-document.getElementById(
-"notificationDropdown"
-);
+document.getElementById("notificationDropdown");
 
 dropdown.style.display =
 dropdown.style.display==="block"
@@ -539,8 +528,37 @@ dropdown.style.display==="block"
 
 });
 
-</script>
+const counters = document.querySelectorAll(".counter");
 
+counters.forEach(counter => {
+
+const updateCounter = () => {
+
+const target = Number(counter.dataset.target);
+const current = Number(counter.innerText);
+
+const increment = target / 50;
+
+if(current < target){
+
+counter.innerText =
+Math.ceil(current + increment);
+
+setTimeout(updateCounter,20);
+
+}else{
+
+counter.innerText = target;
+
+}
+
+};
+
+updateCounter();
+
+});
+
+</script>
 
 </div>
   
