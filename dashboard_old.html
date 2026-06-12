@@ -314,7 +314,191 @@ reception@fmlogistic.com
 
 <div class="main">
 
-PASTE DASHBOARD V2 HERE
+<!-- Dashboard Header -->
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;">
+
+<div>
+<h1 style="font-size:32px;color:#002b7f;">Dashboard</h1>
+<p style="color:#666;margin-top:8px;">
+Welcome back, Nidhi Gajjar
+</p>
+</div>
+
+<div class="notification-wrapper">
+
+<button id="bellBtn" class="notification-bell">
+🔔
+<span class="badge">5</span>
+</button>
+
+<div id="notificationDropdown" class="notification-dropdown">
+
+<div style="padding:10px 0;border-bottom:1px solid #eee;">
+Invoice INV001 Pending Approval
+</div>
+
+<div style="padding:10px 0;border-bottom:1px solid #eee;">
+Visitor Request Waiting
+</div>
+
+<div style="padding:10px 0;">
+Travel Request Approved
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- KPI CARDS -->
+
+<div class="cards">
+
+<div class="card">
+<h3>Total Invoices</h3>
+<h1>150</h1>
+</div>
+
+<div class="card">
+<h3>Pending Approval</h3>
+<h1>20</h1>
+</div>
+
+<div class="card">
+<h3>Approved</h3>
+<h1>100</h1>
+</div>
+
+<div class="card">
+<h3>Paid</h3>
+<h1>30</h1>
+</div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+<div class="panel">
+
+<h2>Invoice Status Overview</h2>
+
+<div style="margin-top:25px;">
+
+<div class="status-item">
+Pending : 20
+</div>
+
+<div class="status-item">
+Approved : 100
+</div>
+
+<div class="status-item">
+Paid : 30
+</div>
+
+<div class="status-item">
+Rejected : 0
+</div>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>Recent Invoices</h2>
+
+<table>
+
+<tr>
+<th>Invoice</th>
+<th>Vendor</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td>INV001</td>
+<td>ABC Logistics</td>
+<td><span class="pending">Pending</span></td>
+</tr>
+
+<tr>
+<td>INV002</td>
+<td>XYZ Transport</td>
+<td><span class="approved">Approved</span></td>
+</tr>
+
+<tr>
+<td>INV003</td>
+<td>Tech Solutions</td>
+<td><span class="approved">Approved</span></td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- QUICK ACTIONS -->
+
+<div class="quick-actions">
+
+<h2>Quick Actions</h2>
+
+<div class="action-grid">
+
+<div class="action-card">
+Upload Invoice
+</div>
+
+<div class="action-card">
+Visitor Entry
+</div>
+
+<div class="action-card">
+Travel Request
+</div>
+
+<div class="action-card">
+Hotel Booking
+</div>
+
+<div class="action-card">
+Reports
+</div>
+
+<div class="action-card">
+Settings
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+document.getElementById("bellBtn")
+.addEventListener("click",function(){
+
+const dropdown =
+document.getElementById(
+"notificationDropdown"
+);
+
+dropdown.style.display =
+dropdown.style.display==="block"
+? "none"
+: "block";
+
+});
+
+</script>
+
 
 </div>
   
