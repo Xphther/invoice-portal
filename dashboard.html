@@ -527,16 +527,53 @@ Settings
 
   <script>
 
+function playNotificationSound(){
+const AudioContext =
+window.AudioContext || window.webkitAudioContext;
+
+if(!AudioContext) return;
+
+const audioContext = new AudioContext();
+const notes = [
+{ frequency:660, start:0, duration:0.12 },
+{ frequency:880, start:0.13, duration:0.18 }
+];
+
+notes.forEach(function(note){
+const oscillator = audioContext.createOscillator();
+const gain = audioContext.createGain();
+const startTime = audioContext.currentTime + note.start;
+const endTime = startTime + note.duration;
+
+oscillator.type = "sine";
+oscillator.frequency.value = note.frequency;
+gain.gain.setValueAtTime(0.0001,startTime);
+gain.gain.exponentialRampToValueAtTime(0.18,startTime + 0.02);
+gain.gain.exponentialRampToValueAtTime(0.0001,endTime);
+
+oscillator.connect(gain);
+gain.connect(audioContext.destination);
+oscillator.start(startTime);
+oscillator.stop(endTime);
+});
+
+setTimeout(function(){
+audioContext.close();
+},500);
+}
+
 document.getElementById("bellBtn")
 .addEventListener("click",function(){
 
 const dropdown =
 document.getElementById("notificationDropdown");
 
-dropdown.style.display =
-dropdown.style.display==="block"
-? "none"
-: "block";
+const isOpening = dropdown.style.display !== "block";
+dropdown.style.display = isOpening ? "block" : "none";
+
+if(isOpening){
+playNotificationSound();
+}
 
 });
 
