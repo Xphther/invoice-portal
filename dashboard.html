@@ -77,14 +77,25 @@ margin-top:30px;
 }
 
 .sidebar li{
-padding:15px;
-margin-bottom:8px;
+padding:15px 18px;
+margin-bottom:10px;
 cursor:pointer;
-border-radius:8px;
+border-radius:12px;
+transition:all .3s ease;
+position:relative;
+font-weight:500;
 }
 
 .sidebar li:hover{
-background:#0046d5;
+background:rgba(255,255,255,.15);
+transform:translateX(8px);
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+  .sidebar li.active{
+background:white;
+color:#002b7f;
+font-weight:700;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
 }
 
 .main{
