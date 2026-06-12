@@ -254,61 +254,85 @@ reception@fmlogistic.com
 </div>
 
 <div class="main">
+<div class="main">
 
-<div class="topbar">
-
-<div>
-<div style="display:flex;
+```
+<div style="
+display:flex;
 justify-content:space-between;
-align-items:center;">
+align-items:center;
+margin-bottom:25px;
+">
 
-<div>
+    <div>
 
-<h1>Welcome, Nidhi Gajjar</h1>
+        <h1>Welcome, Nidhi Gajjar</h1>
 
-<p>
-FM Logistics Operations Portal
-</p>
+        <p style="
+        color:#6b7280;
+        margin-top:5px;
+        ">
+        FM Logistics Operations Portal
+        </p>
+
+        <p style="
+        color:#9ca3af;
+        margin-top:8px;
+        ">
+        Here's what's happening with your operations today.
+        </p>
+
+    </div>
+
+    <div class="notification-wrapper">
+
+        <button
+        id="bellBtn"
+        class="notification-bell">
+
+            🔔
+
+            <span class="badge">
+            5
+            </span>
+
+        </button>
+
+        <div
+        id="notificationDropdown"
+        class="notification-dropdown">
+
+            <div class="event">
+            Invoice INV001 Pending Approval
+            </div>
+
+            <div class="event">
+            Travel Request Approved
+            </div>
+
+            <div class="event">
+            Hotel Booking Confirmed
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
-<div class="notification-wrapper">
+<div class="notification-panel">
 
-<button
-id="bellBtn"
-class="notification-bell">
+    <div class="notice">
+    5 Pending Approvals
+    </div>
 
-🔔
+    <div class="notice">
+    12 New Invoices
+    </div>
 
-<span class="badge">
-5
-</span>
-
-</button>
-
-<div
-id="notificationDropdown"
-class="notification-dropdown">
-
-<div class="event">
-Invoice INV001 Pending Approval
-</div>
-
-<div class="event">
-Travel Request Approved
-</div>
-
-<div class="event">
-Hotel Booking Confirmed
-</div>
-
-</div>
-
-</div>
-
-</div>
-<p>Here's what's happening with your operations today.</p>
-</div>
+    <div class="notice">
+    2 Travel Requests
+    </div>
 
 </div>
 
