@@ -1,0 +1,124 @@
+| Invoice ID | Vendor        | Invoice Date | Amount  | Submitted By | Branch | Status  | Action |
+| ---------- | ------------- | ------------ | ------- | ------------ | ------ | ------- | ------ |
+| INV001     | ABC Logistics | 12-Jun-2026  | ₹25,000 | Nidhi Gajjar | Mumbai | Pending | Review |
+| INV002     | XYZ Transport | 13-Jun-2026  | ₹18,000 | Rahul Shah   | Pune   | Pending | Review |
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Invoice Approvals</title>
+
+<style>
+
+body{
+font-family:'Segoe UI',sans-serif;
+background:#f4f6f9;
+padding:30px;
+}
+
+.container{
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+h1{
+margin-bottom:20px;
+color:#002b7f;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#eef3ff;
+padding:12px;
+text-align:left;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #ddd;
+}
+
+.review-btn{
+background:#002b7f;
+color:white;
+padding:8px 15px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.status{
+background:#fff3cd;
+color:#856404;
+padding:6px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Invoice Approval Queue</h1>
+
+<table>
+
+<tr>
+<th>Invoice ID</th>
+<th>Vendor</th>
+<th>Invoice Date</th>
+<th>Amount</th>
+<th>Submitted By</th>
+<th>Branch</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+<tr>
+<td>INV001</td>
+<td>ABC Logistics</td>
+<td>12-Jun-2026</td>
+<td>₹25,000</td>
+<td>Nidhi Gajjar</td>
+<td>Mumbai</td>
+<td><span class="status">Submitted</span></td>
+<td>
+<button class="review-btn"
+onclick="window.location.href='invoice-review.html'">
+Review
+</button>
+</td>
+</tr>
+
+<tr>
+<td>INV002</td>
+<td>XYZ Transport</td>
+<td>13-Jun-2026</td>
+<td>₹18,000</td>
+<td>Rahul Shah</td>
+<td>Pune</td>
+<td><span class="status">Under Review</span></td>
+<td>
+<button class="review-btn"
+onclick="window.location.href='invoice-review.html'">
+Review
+</button>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</body>
+</html>
