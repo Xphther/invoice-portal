@@ -271,6 +271,48 @@ font-weight:600;
 transform:translateY(-5px);
 transition:.3s;
 }
+body{
+background:linear-gradient(135deg,#f5f7fa,#eef4ff);
+}
+
+.card,
+.panel,
+.quick-actions{
+background:rgba(255,255,255,0.85);
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,.4);
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.notification-bell{
+animation:ring 3s infinite;
+}
+
+@keyframes ring{
+
+0%{transform:rotate(0deg);}
+5%{transform:rotate(15deg);}
+10%{transform:rotate(-15deg);}
+15%{transform:rotate(10deg);}
+20%{transform:rotate(0deg);}
+100%{transform:rotate(0deg);}
+
+}
+
+.card h1{
+color:#002b7f;
+font-size:42px;
+font-weight:700;
+}
+
+.action-card{
+transition:.3s;
+}
+
+.action-card:hover{
+transform:translateY(-8px);
+background:#dbe8ff;
+}
 
 </style>
 
