@@ -205,14 +205,73 @@ font-size:13px;
 font-weight:600;
 }
 
-.paid{
-background:#d1ecf1;
-color:#0c5460;
-padding:6px 12px;
-border-radius:20px;
-font-size:13px;
+/* ===== Notification ===== */
+
+.notification-wrapper{
+position:relative;
+}
+
+.notification-bell{
+position:relative;
+background:white;
+border:none;
+width:55px;
+height:55px;
+border-radius:50%;
+cursor:pointer;
+font-size:22px;
+box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+.badge{
+position:absolute;
+top:-5px;
+right:-5px;
+width:22px;
+height:22px;
+border-radius:50%;
+background:red;
+color:white;
+font-size:11px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.notification-dropdown{
+display:none;
+position:absolute;
+right:0;
+top:70px;
+width:320px;
+background:white;
+padding:15px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
+z-index:999;
+}
+
+.notification-panel{
+display:flex;
+gap:15px;
+margin-bottom:25px;
+}
+
+.notice{
+background:white;
+padding:12px 18px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
 font-weight:600;
 }
+
+.card:hover,
+.panel:hover,
+.action-card:hover{
+transform:translateY(-5px);
+transition:.3s;
+}
+
 </style>
 
 </head>
@@ -254,195 +313,10 @@ reception@fmlogistic.com
 </div>
 
 <div class="main">
-<div class="main">
 
-```
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:25px;
-">
-
-    <div>
-
-        <h1>Welcome, Nidhi Gajjar</h1>
-
-        <p style="
-        color:#6b7280;
-        margin-top:5px;
-        ">
-        FM Logistics Operations Portal
-        </p>
-
-        <p style="
-        color:#9ca3af;
-        margin-top:8px;
-        ">
-        Here's what's happening with your operations today.
-        </p>
-
-    </div>
-
-    <div class="notification-wrapper">
-
-        <button
-        id="bellBtn"
-        class="notification-bell">
-
-            🔔
-
-            <span class="badge">
-            5
-            </span>
-
-        </button>
-
-        <div
-        id="notificationDropdown"
-        class="notification-dropdown">
-
-            <div class="event">
-            Invoice INV001 Pending Approval
-            </div>
-
-            <div class="event">
-            Travel Request Approved
-            </div>
-
-            <div class="event">
-            Hotel Booking Confirmed
-            </div>
-
-        </div>
-
-    </div>
+PASTE DASHBOARD V2 HERE
 
 </div>
-
-<div class="notification-panel">
-
-    <div class="notice">
-    5 Pending Approvals
-    </div>
-
-    <div class="notice">
-    12 New Invoices
-    </div>
-
-    <div class="notice">
-    2 Travel Requests
-    </div>
-
-</div>
-
-<div class="cards">
-
-<div class="card">
-<h3>Total Invoices</h3>
-<h1>150</h1>
-</div>
-
-<div class="card">
-<h3>Pending</h3>
-<h1>20</h1>
-</div>
-
-<div class="card">
-<h3>Approved</h3>
-<h1>100</h1>
-</div>
-
-<div class="card">
-<h3>Paid</h3>
-<h1>30</h1>
-</div>
-
-</div>
-
-<div class="content">
-
-<div class="panel">
-
-<h2>Invoice Status Overview</h2>
-
-<div style="text-align:center;margin-top:30px;">
-
-<div style="font-size:70px;font-weight:bold;color:#002b7f;">
-150
-</div>
-
-<div style="font-size:18px;color:#666;">
-Total Invoices
-</div>
-
-<hr style="margin:20px 0;">
-
-<div class="status-item">🟡 Pending : 20</div>
-<div class="status-item">🟢 Approved : 100</div>
-<div class="status-item">🔵 Paid : 30</div>
-<div class="status-item">🔴 Rejected : 0</div>
-
-</div>
-
-</div>
-
-
-<div class="panel">
-
-<h2>Recent Invoices</h2>
-
-<table>
-
-<tr>
-<th>Invoice</th>
-<th>Vendor</th>
-<th>Status</th>
-</tr>
-
-<tr>
-<td>INV-001</td>
-<td>ABC Supplies</td>
-<td><span class="pending">Pending</span></td>
-</tr>
-
-<tr>
-<td>INV-002</td>
-<td>XYZ Logistics</td>
-<td><span class="approved">Approved</span></td>
-</tr>
-
-<tr>
-<td>INV-003</td>
-<td>Tech Solutions</td>
-<td><span class="paid">Paid</span></td>
-</tr>
-
-</table>
-
-</div>
-
-</div>
-
-<div class="quick-actions">
-
-<h2>Quick Actions</h2>
-
-<div class="action-grid">
-
-<div class="action-card">📄 Upload Invoice</div>
-<div class="action-card">👥 Visitor Entry</div>
-<div class="action-card">✈ Travel Request</div>
-
-<div class="action-card">🏨 Hotel Booking</div>
-<div class="action-card">🚕 Cab Request</div>
-<div class="action-card">📦 Asset Request</div>
-
-</div>
-
-</div>
-
-</div>
-
+  
 </body>
 </html>
