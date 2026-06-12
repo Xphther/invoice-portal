@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Invoice Review</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f4f6f9;
+padding:30px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:25px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+h1{
+color:#002b7f;
+margin-bottom:20px;
+}
+
+h2{
+color:#002b7f;
+margin-bottom:15px;
+}
+
+.detail-row{
+display:grid;
+grid-template-columns:200px 1fr;
+padding:10px 0;
+border-bottom:1px solid #eee;
+}
+
+.label{
+font-weight:600;
+color:#555;
+}
+
+textarea{
+width:100%;
+height:120px;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+resize:none;
+}
+
+.btn{
+padding:12px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+margin-right:10px;
+margin-top:15px;
+}
+
+.approve{
+background:#28a745;
+color:white;
+}
+
+.reject{
+background:#dc3545;
+color:white;
+}
+
+.workflow-step{
+padding:12px;
+border:1px solid #e5e7eb;
+border-radius:8px;
+margin-bottom:10px;
+background:#f9fafb;
+}
+
+.attachment{
+padding:15px;
+background:#eef3ff;
+border-radius:8px;
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Invoice Review</h1>
+<div class="card" style="margin-bottom:20px;">
+<b>Status:</b> Under Review
+</div>
+
+<div class="container">
+
+<!-- LEFT SIDE -->
+
+<div>
+
+<div class="card">
+
+<h2>Invoice Details</h2>
+
+<div class="detail-row">
+<div class="label">Invoice ID</div>
+<div>INV001</div>
+</div>
+
+<div class="detail-row">
+<div class="label">Vendor</div>
+<div>ABC Logistics</div>
+</div>
+
+<div class="detail-row">
+<div class="label">Invoice Date</div>
+<div>12-Jun-2026</div>
+</div>
+
+<div class="detail-row">
+<div class="label">Due Date</div>
+<div>30-Jun-2026</div>
+</div>
+
+<div class="detail-row">
+<div class="label">Branch</div>
+<div>Mumbai</div>
+</div>
+
+<div class="detail-row">
+<div class="label">Service Type</div>
+<div>Transport</div>
+</div>
+
+<div class="detail-row">
+<div class="label">Amount</div>
+<div>₹25,000</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Attachment</h2>
+
+<div class="attachment">
+<a href="#">invoice_INV001.pdf</a>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Approval Remarks</h2>
+
+<textarea placeholder="Enter remarks here"></textarea>
+
+<br>
+
+<button class="btn approve">
+Approve Invoice
+</button>
+
+<button class="btn reject">
+Reject Invoice
+</button>
+
+</div>
+
+</div>
+
+<!-- RIGHT SIDE -->
+
+<div>
+
+<div class="card">
+
+<h2>Approval Workflow</h2>
+
+<div class="workflow-step">
+Submitted - Completed
+</div>
+
+<div class="workflow-step">
+Finance Review - Current Stage
+</div>
+
+<div class="workflow-step">
+Accounts Approval - Waiting
+</div>
+
+<div class="workflow-step">
+Payment Processing - Waiting
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Approval History</h2>
+
+<p>
+<b>Submitted By</b><br>
+Nidhi Gajjar<br>
+12-Jun-2026 10:30 AM
+</p>
+
+<br>
+
+<p>
+<b>Finance Review</b><br>
+Pending
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>
