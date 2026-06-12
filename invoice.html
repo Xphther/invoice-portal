@@ -1,211 +1,349 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Invoice Management</title>
 
 <style>
 
-.page-layout{
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:25px;
-align-items:start;
-}
-
-.ocr-panel{
-display:flex;
-flex-direction:column;
-gap:20px;
-}
-
-.scan-card,
-.workflow-card{
-background:white;
-padding:25px;
-border-radius:12px;
-box-shadow:0 2px 10px rgba(0,0,0,.08);
-text-align:center;
-}
-
-.workflow-card p{
-padding:12px 0;
-border-bottom:1px solid #eee;
-}
-
-.ocr-status{
-background:#fff3cd;
-color:#856404;
-padding:10px;
-border-radius:20px;
-font-weight:600;
-display:inline-block;
-margin-top:15px;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
 }
 
 body{
-font-family:'Segoe UI',sans-serif;
 background:#f4f6f9;
-padding:40px;
+padding:25px;
 }
 
-.invoice-form{
+.container{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
+}
+
+.card{
 background:white;
-padding:30px;
+padding:25px;
 border-radius:12px;
-box-shadow:0 2px 10px rgba(0,0,0,.08);
-width:100%;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+margin-bottom:20px;
 }
 
 h1{
-margin-bottom:30px;
-}
-
-h2{
-margin-top:30px;
-margin-bottom:15px;
+margin-bottom:25px;
 color:#002b7f;
 }
 
-input,select{
-width:100%;
-padding:12px;
-border:1px solid #ddd;
-border-radius:8px;
+h2{
+margin-bottom:20px;
+color:#002b7f;
 }
 
-button{
+label{
+display:block;
+font-size:13px;
+margin-bottom:6px;
+font-weight:600;
+color:#555;
+}
+
+input,
+select{
+width:100%;
+padding:12px;
+border:1px solid #dcdcdc;
+border-radius:8px;
+margin-bottom:15px;
+}
+
+.two-column{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.upload-box{
+height:500px;
+border:2px dashed #cfd8e3;
+border-radius:12px;
+background:#f8fafc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:#666;
+font-size:20px;
+font-weight:600;
+}
+
+.upload-btn{
 background:#002b7f;
 color:white;
-padding:12px 25px;
+padding:12px 20px;
 border:none;
 border-radius:8px;
 cursor:pointer;
+}
+
+.workflow-step{
+padding:12px;
+border:1px solid #e5e7eb;
+border-radius:8px;
+margin-bottom:10px;
+background:#f9fafb;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+}
+
+th{
+background:#eef3ff;
+padding:12px;
+text-align:left;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #ddd;
+}
+
+.add-btn{
+background:#002b7f;
+color:white;
+padding:10px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin-top:15px;
+}
+
+.submit-btn{
+background:#002b7f;
+color:white;
+padding:14px 25px;
+border:none;
+border-radius:8px;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+margin-top:20px;
+}
+
+.status{
+background:#fff3cd;
+color:#856404;
+padding:8px 12px;
+border-radius:20px;
+display:inline-block;
+margin-top:15px;
+font-size:13px;
 font-weight:600;
 }
 
 </style>
-
 </head>
+
 <body>
 
 <h1>Invoice Management</h1>
 
-<div class="page-layout">
+<div class="container">
 
-    <!-- LEFT SIDE FORM -->
+<!-- LEFT SIDE -->
 
-    <div class="invoice-form">
+<div>
 
-        <h2>Vendor Details</h2>
+<div class="card">
 
-        <label>Vendor Name</label><br>
-        <input type="text" placeholder="Enter Vendor Name">
+<h2>Attachments</h2>
 
-        <br><br>
+<input type="file">
 
-        <label>Service Type</label><br>
-        <select>
-            <option>Select Service</option>
-            <option>Transport</option>
-            <option>Hotel</option>
-            <option>Courier</option>
-        </select>
+</div>
 
-        <br><br>
+<div class="card">
 
-        <h2>Invoice Details</h2>
+<h2>Vendor</h2>
 
-        <label>Invoice Number</label><br>
-        <input type="text" placeholder="Invoice Number">
+<label>Search Vendor</label>
+<input type="text" placeholder="Search vendor from vendor directory">
 
-        <br><br>
+<label>Select Service</label>
+<select>
+<option>Select</option>
+<option>Transport</option>
+<option>Hotel</option>
+<option>Courier</option>
+</select>
 
-        <label>Invoice Date</label><br>
-        <input type="date">
+</div>
 
-        <br><br>
+<div class="card">
 
-        <label>Due Date</label><br>
-        <input type="date">
+<h2>Billing To</h2>
 
-        <br><br>
+<div class="two-column">
 
-        <label>Branch</label><br>
-        <input type="text" placeholder="Branch Name">
+<div>
+<label>Select Branch</label>
+<input type="text" placeholder="Branch Name">
+</div>
 
-        <br><br>
+<div>
+<label>Invoice Number</label>
+<input type="text" placeholder="Invoice Number">
+</div>
 
-        <label>Currency</label><br>
-        <select>
-            <option>INR</option>
-            <option>USD</option>
-        </select>
+<div>
+<label>Invoice Creation Date</label>
+<input type="date">
+</div>
 
-        <br><br>
+<div>
+<label>Due Date</label>
+<input type="date">
+</div>
 
-        <h2>Amount Details</h2>
+</div>
 
-        <label>Base Amount</label><br>
-        <input type="number" placeholder="Base Amount">
+<label>Select Currency</label>
 
-        <br><br>
+<select>
+<option>INR</option>
+<option>USD</option>
+</select>
 
-        <label>CGST</label><br>
-        <input type="number" placeholder="CGST">
+</div>
 
-        <br><br>
+<div class="card">
 
-        <label>SGST</label><br>
-        <input type="number" placeholder="SGST">
+<h2>Amount</h2>
 
-        <br><br>
+<div class="two-column">
 
-        <label>IGST</label><br>
-        <input type="number" placeholder="IGST">
+<div>
+<label>Base Amount</label>
+<input type="number">
+</div>
 
-        <br><br>
+<div>
+<label>State GST Amount</label>
+<input type="number">
+</div>
 
-        <label>Total Amount</label><br>
-        <input type="number" placeholder="Total Amount">
+<div>
+<label>CGST Amount</label>
+<input type="number">
+</div>
 
-        <br><br>
+<div>
+<label>IGST Amount</label>
+<input type="number">
+</div>
 
-        <button>Submit Invoice</button>
+<div>
+<label>Discount Amount</label>
+<input type="number">
+</div>
 
-    </div>
+<div>
+<label>Round Off Amount</label>
+<input type="number">
+</div>
 
-    <!-- RIGHT SIDE PANEL -->
+</div>
 
-    <div class="ocr-panel">
+<label>Total Amount</label>
+<input type="number">
 
-        <div class="scan-card">
+</div>
 
-            <div style="font-size:80px;">👁️</div>
+<div class="card">
 
-            <h2>Scanning Invoice</h2>
+<h2>Cost Allocation</h2>
 
-            <p>
-                OCR engine will automatically read invoice data
-                after upload.
-            </p>
+<table>
 
-            <div class="ocr-status">
-                Coming Soon
-            </div>
+<tr>
+<th>Location</th>
+<th>Percentage</th>
+<th>Amount</th>
+</tr>
 
-        </div>
+<tr>
+<td>Mumbai</td>
+<td>100%</td>
+<td>₹0</td>
+</tr>
 
-        <div class="workflow-card">
+</table>
 
-            <h2>Approval Workflow</h2>
+<button class="add-btn">
+Add Allocation
+</button>
 
-            <p>✅ Submitted</p>
-            <p>🟡 Finance Review</p>
-            <p>⚪ Accounts Approval</p>
-            <p>⚪ Payment Processing</p>
+</div>
 
-        </div>
+<button class="submit-btn">
+Submit Invoice
+</button>
 
-    </div>
+</div>
+
+<!-- RIGHT SIDE -->
+
+<div>
+
+<div class="card">
+
+<div class="upload-box">
+
+<div>
+
+<div style="margin-bottom:15px;">
+Upload Invoice PDF
+</div>
+
+<input type="file">
+
+</div>
+
+</div>
+
+<div class="status">
+OCR Processing - Coming Soon
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Approval Workflow</h2>
+
+<div class="workflow-step">
+Submitted
+</div>
+
+<div class="workflow-step">
+Finance Review
+</div>
+
+<div class="workflow-step">
+Accounts Approval
+</div>
+
+<div class="workflow-step">
+Payment Processing
+</div>
+
+</div>
+
+</div>
 
 </div>
 
