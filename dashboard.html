@@ -292,8 +292,9 @@ box-shadow:0 15px 35px rgba(0,0,0,.15);
   
 .card h1{
 color:#002b7f;
-font-size:42px;
-font-weight:700;
+font-size:46px;
+font-weight:800;
+letter-spacing:-1px;
 }
 
 .action-card{
@@ -391,22 +392,22 @@ Welcome back, Nidhi Gajjar
 
 <div class="card">
 <h3>Total Invoices</h3>
-<h1 class="counter" data-target="150">0</h1>
+<h1>150</h1>
 </div>
 
 <div class="card">
 <h3>Pending Approval</h3>
-<h1 class="counter" data-target="20">0</h1>
+<h1>20</h1>
 </div>
 
 <div class="card">
 <h3>Approved</h3>
-<h1 class="counter" data-target="100">0</h1>
+<h1>100</h1>
 </div>
 
 <div class="card">
 <h3>Paid</h3>
-<h1 class="counter" data-target="30">0</h1>
+<h1>30</h1>
 </div>
 
 </div>
@@ -525,36 +526,6 @@ dropdown.style.display =
 dropdown.style.display==="block"
 ? "none"
 : "block";
-
-});
-
-const counters = document.querySelectorAll(".counter");
-
-counters.forEach(counter => {
-
-const updateCounter = () => {
-
-const target = Number(counter.dataset.target);
-const current = Number(counter.innerText);
-
-const increment = target / 50;
-
-if(current < target){
-
-counter.innerText =
-Math.ceil(current + increment);
-
-setTimeout(updateCounter,20);
-
-}else{
-
-counter.innerText = target;
-
-}
-
-};
-
-updateCounter();
 
 });
 
