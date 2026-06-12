@@ -15,6 +15,25 @@ box-sizing:border-box;
 font-family:Segoe UI,sans-serif;
 }
 
+.logo{
+text-align:center;
+margin-bottom:40px;
+}
+
+.logo-circle{
+width:90px;
+height:90px;
+margin:0 auto 15px;
+background:white;
+color:#002b7f;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:36px;
+font-weight:bold;
+}
+
 body{
 background:#f4f6f9;
 display:flex;
@@ -156,7 +175,32 @@ font-weight:600;
 .action-card:hover{
 background:#dce7ff;
 }
+.pending{
+background:#fff3cd;
+color:#856404;
+padding:6px 12px;
+border-radius:20px;
+font-size:13px;
+font-weight:600;
+}
 
+.approved{
+background:#d4edda;
+color:#155724;
+padding:6px 12px;
+border-radius:20px;
+font-size:13px;
+font-weight:600;
+}
+
+.paid{
+background:#d1ecf1;
+color:#0c5460;
+padding:6px 12px;
+border-radius:20px;
+font-size:13px;
+font-weight:600;
+}
 </style>
 
 </head>
@@ -194,7 +238,7 @@ FM
 <div class="topbar">
 
 <div>
-<h1>Welcome, Nidhi Sharma 👋</h1>
+<h1>Welcome, Nidhi Gajjar 👋</h1>
 <p>Here's what's happening with your operations today.</p>
 </div>
 
@@ -271,19 +315,19 @@ Total Invoices
 <tr>
 <td>INV-001</td>
 <td>ABC Supplies</td>
-<td>Pending</td>
+<td><span class="pending">Pending</span></td>
 </tr>
 
 <tr>
 <td>INV-002</td>
 <td>XYZ Logistics</td>
-<td>Approved</td>
+<td><span class="approved">Approved</span></td>
 </tr>
 
 <tr>
 <td>INV-003</td>
 <td>Tech Solutions</td>
-<td>Paid</td>
+<td><span class="paid">Paid</span></td>
 </tr>
 
 </table>
