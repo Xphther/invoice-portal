@@ -1,70 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Invoice Management</title>
-<style>
-body{
-font-family:Segoe UI;
-background:#f4f6f9;
-padding:30px;
-}
-
-.container{
-background:white;
-padding:30px;
-border-radius:12px;
-box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
-}
-
-th,td{
-padding:12px;
-border-bottom:1px solid #ddd;
-text-align:left;
-}
-
-button{
-background:#002b7f;
-color:white;
-border:none;
-padding:10px 20px;
-border-radius:6px;
-cursor:pointer;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
 <h1>Invoice Management</h1>
 
-<button>Upload Invoice</button>
+<br>
 
-<table>
-<tr>
-<th>Invoice No</th>
-<th>Vendor</th>
-<th>Amount</th>
-<th>Status</th>
-</tr>
+<label>Vendor Name</label><br>
+<input type="text" placeholder="Enter Vendor Name">
 
-<tr>
-<td>INV-001</td>
-<td>ABC Supplies</td>
-<td>₹25,000</td>
-<td>Pending</td>
-</tr>
+<br><br>
 
-</table>
+<label>Invoice Number</label><br>
+<input type="text" placeholder="Enter Invoice Number">
 
-</div>
+<br><br>
 
-</body>
-</html>
+<label>Invoice Date</label><br>
+<input type="date">
+
+<br><br>
+
+<label>Invoice Amount</label><br>
+<input type="number" placeholder="Enter Amount">
+
+<br><br>
+
+<button>Submit Invoice</button>
