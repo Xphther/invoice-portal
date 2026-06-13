@@ -13,7 +13,7 @@
 --muted:#687386;
 --line:#e5e7eb;
 --soft:#f7f8fa;
---rose:#f8dedb;
+--nav-open:#eaf0fa;
 }
 
 *{
@@ -139,6 +139,16 @@ background:#f4f5f7;
 transform:translateX(2px);
 }
 
+.nav-item:active,
+.nav-toggle:active{
+transform:scale(.98);
+}
+
+.nav-item.home-link{
+color:var(--blue);
+font-weight:650;
+}
+
 .nav-icon{
 width:20px;
 font-size:17px;
@@ -154,7 +164,8 @@ transition:transform .25s;
 .nav-group.open{
 padding-bottom:8px;
 border-radius:6px;
-background:var(--rose);
+background:var(--nav-open);
+box-shadow:inset 3px 0 #6282b8;
 }
 
 .nav-group.open .nav-toggle{
@@ -178,19 +189,19 @@ animation:reveal .2s ease-out;
 .subnav a{
 padding:9px 15px;
 margin:2px 0;
-color:#6d3c38;
+color:#455a78;
 font-size:12px;
 }
 
 .subnav a:hover{
-background:rgba(255,255,255,.55);
-color:#222;
+background:rgba(255,255,255,.7);
+color:var(--blue);
 }
 
 .subnav a.active{
 background:#fff;
-color:#5c3b38;
-box-shadow:0 2px 10px rgba(93,48,44,.06);
+color:var(--blue);
+box-shadow:0 2px 10px rgba(0,43,127,.08);
 }
 
 .main{
@@ -786,7 +797,7 @@ width:100%;
 </div>
 
 <nav>
-<a class="nav-item" href="./dashboard.html" onclick="window.location.href='./dashboard.html'">
+<a class="nav-item home-link" id="homeLink" href="dashboard.html">
 <span class="nav-icon">&#9638;</span><span class="nav-label">Home</span>
 </a>
 
@@ -1037,6 +1048,17 @@ const amountFilter = document.getElementById("amountFilter");
 const emptyState = document.getElementById("emptyState");
 let activeStatus = "pending";
 let sortAscending = true;
+
+document.getElementById("homeLink").addEventListener("click",function(event){
+event.preventDefault();
+const dashboardUrl = new URL("dashboard.html",document.baseURI);
+
+if(window.location.pathname === dashboardUrl.pathname){
+window.location.reload();
+}else{
+window.location.assign(dashboardUrl.href);
+}
+});
 
 function visibleRows(){
 return rows.filter(function(row){
