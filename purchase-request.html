@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Purchase Request</title>
+<style>
+:root{--red:#ef2b2d;--blue:#002b7f;--ink:#211f1f;--muted:#6e6868;--line:#e5e2e2}
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI Variable Text","Segoe UI",sans-serif}
+body{
+min-height:100vh;color:var(--ink);
+background:
+radial-gradient(circle at 12% 10%,rgba(239,43,45,.14),transparent 28%),
+radial-gradient(circle at 90% 18%,rgba(0,43,127,.14),transparent 30%),
+linear-gradient(135deg,#fbfcff,#fff8f7 52%,#f4f8ff);
+background-size:140% 140%;animation:moveBackground 15s ease-in-out infinite alternate
+}
+button,input,select,textarea{font:inherit}
+.topbar{
+display:flex;align-items:center;justify-content:space-between;height:66px;padding:0 30px;
+border-bottom:1px solid rgba(210,214,222,.8);background:rgba(255,255,255,.82);
+backdrop-filter:blur(16px)
+}
+.back-link{color:var(--blue);font-weight:700;text-decoration:none}
+.draft-state{
+padding:6px 11px;border-radius:15px;background:#fff0c8;color:#765600;
+font-size:12px;font-weight:700
+}
+.stepper{
+display:flex;align-items:center;justify-content:center;gap:10px;padding:26px 20px;
+border-bottom:1px solid var(--line);background:rgba(255,255,255,.7)
+}
+.step{display:flex;align-items:center;gap:9px;color:#666;font-size:13px}
+.step-number{
+display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+background:#171717;color:#fff;font-weight:700
+}
+.step.active{color:var(--blue);font-weight:700}
+.step.active .step-number{
+background:linear-gradient(135deg,#6d66ff,var(--blue));
+box-shadow:0 5px 14px rgba(0,43,127,.22)
+}
+.step.done .step-number{background:#24995e}
+.connector{width:62px;border-top:2px dashed #dedede}
+.form-shell{
+width:min(980px,calc(100% - 40px));margin:38px auto;padding:38px 48px;
+border:1px solid rgba(255,255,255,.85);border-radius:18px;background:rgba(255,255,255,.86);
+box-shadow:0 20px 55px rgba(27,43,70,.12);backdrop-filter:blur(16px)
+}
+.form-page{display:none;animation:pageIn .28s ease-out}
+.form-page.active{display:block}
+h1{margin-bottom:5px;font-size:29px;letter-spacing:-.5px}
+.intro{margin-bottom:30px;color:var(--muted);font-size:13px}
+.field{margin-bottom:18px}
+.field label{
+display:block;margin-bottom:7px;color:#735f5d;font-size:12px;
+font-weight:700;text-transform:uppercase
+}
+.field input,.field select,.field textarea{
+width:100%;padding:12px;border:1px solid #a99390;border-radius:4px;
+background:rgba(248,223,220,.82);outline:none;
+transition:border .2s,box-shadow .2s,background .2s
+}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{
+border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(0,43,127,.1)
+}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.product-card{
+display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:12px;align-items:end;
+margin-bottom:12px;padding:15px;border:1px solid var(--line);border-radius:9px;background:#fafbfc
+}
+.product-card .field{margin:0}
+.remove-product{
+width:38px;height:42px;border:0;border-radius:6px;background:#ffe4e3;
+color:#aa2023;font-size:20px;cursor:pointer
+}
+.secondary-button{
+padding:10px 15px;border:1px solid var(--blue);border-radius:6px;
+background:#fff;color:var(--blue);font-weight:700;cursor:pointer
+}
+.summary{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.summary div{padding:15px;border-radius:8px;background:#f5f7fa}
+.summary strong{display:block;margin-bottom:5px;font-size:12px;text-transform:uppercase}
+.form-actions{
+display:flex;justify-content:space-between;margin-top:30px;padding-top:20px;
+border-top:1px solid var(--line)
+}
+.action-button{padding:11px 22px;border:0;border-radius:7px;font-weight:700;cursor:pointer}
+.previous{background:#eef1f5;color:#333}
+.next,.submit{
+background:var(--red);color:#fff;box-shadow:0 7px 18px rgba(239,43,45,.2)
+}
+.next:hover,.submit:hover{background:#d91f21;transform:translateY(-1px)}
+.toast{
+position:fixed;right:24px;bottom:24px;padding:12px 17px;border-radius:8px;
+background:#20242b;color:#fff;opacity:0;transform:translateY(12px);transition:.2s
+}
+.toast.show{opacity:1;transform:translateY(0)}
+@keyframes moveBackground{from{background-position:0% 20%}to{background-position:100% 80%}}
+@keyframes pageIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
+@media(max-width:700px){
+.step span:not(.step-number),.connector{display:none}
+.field-grid,.summary{grid-template-columns:1fr}
+.product-card{grid-template-columns:1fr}
+.form-shell{padding:28px 20px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a class="back-link" href="dashboard.html">&larr; Purchase Requests</a>
+<span class="draft-state">Draft</span>
+</header>
+
+<div class="stepper">
+<div class="step active"><span class="step-number">1</span><span>Address</span></div>
+<span class="connector"></span>
+<div class="step"><span class="step-number">2</span><span>Custom Form</span></div>
+<span class="connector"></span>
+<div class="step"><span class="step-number">3</span><span>Add Product</span></div>
+<span class="connector"></span>
+<div class="step"><span class="step-number">4</span><span>Final Step</span></div>
+</div>
+
+<main class="form-shell">
+<form id="purchaseRequestForm">
+<section class="form-page active">
+<h1>New Purchase Request</h1>
+<p class="intro">First, provide the basic information about the purchase request.</p>
+<div class="field">
+<label for="prTitle">Enter PR Title</label>
+<input id="prTitle" required placeholder="Purchase Request Title">
+</div>
+<div class="field">
+<label for="category">Select a Category</label>
+<select id="category" required>
+<option value="">Enter a value to search category</option>
+<option>Printing &amp; Stationery</option>
+<option>IT Equipment</option>
+<option>Facility</option>
+<option>Transport</option>
+</select>
+</div>
+<div class="field">
+<label for="address">Search Address</label>
+<input id="address" required placeholder="Search Address">
+</div>
+<div class="field-grid">
+<div class="field">
+<label for="currency">Currency</label>
+<select id="currency"><option>INR</option><option>USD</option><option>EUR</option></select>
+</div>
+<div class="field">
+<label for="deliveryDate">Expected Delivery Date</label>
+<input id="deliveryDate" type="date" required>
+</div>
+</div>
+</section>
+
+<section class="form-page">
+<h1>Purchase Details</h1>
+<p class="intro">Add the business context required for approval.</p>
+<div class="field-grid">
+<div class="field">
+<label for="department">Department</label>
+<select id="department" required>
+<option value="">Select department</option>
+<option>Administration</option><option>Finance</option><option>IT</option><option>Operations</option>
+</select>
+</div>
+<div class="field">
+<label for="costCenter">Cost Center</label>
+<input id="costCenter" required placeholder="e.g. CC-MUM-001">
+</div>
+</div>
+<div class="field">
+<label for="purpose">Business Purpose</label>
+<textarea id="purpose" required placeholder="Explain why this purchase is required"></textarea>
+</div>
+<div class="field">
+<label for="attachment">Supporting Attachment</label>
+<input id="attachment" type="file">
+</div>
+</section>
+
+<section class="form-page">
+<h1>Add Product</h1>
+<p class="intro">List the products or services required for this request.</p>
+<div id="products"></div>
+<button class="secondary-button" id="addProduct" type="button">+ Add another product</button>
+</section>
+
+<section class="form-page">
+<h1>Review Purchase Request</h1>
+<p class="intro">Confirm the details before submitting the request for approval.</p>
+<div class="summary" id="requestSummary"></div>
+</section>
+
+<div class="form-actions">
+<button class="action-button previous" id="previousButton" type="button" hidden>Previous</button>
+<span></span>
+<button class="action-button next" id="nextButton" type="button">Save &amp; Continue</button>
+<button class="action-button submit" id="submitButton" type="submit" hidden>Submit Request</button>
+</div>
+</form>
+</main>
+
+<div class="toast" id="toast">Purchase request submitted</div>
+<script>
+const pages = Array.from(document.querySelectorAll(".form-page"));
+const steps = Array.from(document.querySelectorAll(".step"));
+const previousButton = document.getElementById("previousButton");
+const nextButton = document.getElementById("nextButton");
+const submitButton = document.getElementById("submitButton");
+const products = document.getElementById("products");
+let currentPage = 0;
+
+function addProduct(){
+const product = document.createElement("div");
+product.className = "product-card";
+product.innerHTML =
+'<div class="field"><label>Product or Service</label><input class="product-name" required placeholder="Item name"></div>' +
+'<div class="field"><label>Quantity</label><input class="product-quantity" type="number" min="1" value="1" required></div>' +
+'<div class="field"><label>Estimated Amount</label><input class="product-amount" type="number" min="0" required placeholder="0.00"></div>' +
+'<button class="remove-product" type="button" title="Remove">&times;</button>';
+product.querySelector(".remove-product").addEventListener("click",function(){
+if(products.children.length > 1) product.remove();
+});
+products.appendChild(product);
+}
+
+function pageIsValid(){
+const requiredFields = Array.from(pages[currentPage].querySelectorAll("[required]"));
+for(const field of requiredFields){
+if(!field.checkValidity()){
+field.reportValidity();
+return false;
+}
+}
+return true;
+}
+
+function showPage(index){
+currentPage = index;
+pages.forEach(function(page,pageIndex){page.classList.toggle("active",pageIndex === currentPage)});
+steps.forEach(function(step,stepIndex){
+step.classList.toggle("active",stepIndex === currentPage);
+step.classList.toggle("done",stepIndex < currentPage);
+});
+previousButton.hidden = currentPage === 0;
+nextButton.hidden = currentPage === pages.length - 1;
+submitButton.hidden = currentPage !== pages.length - 1;
+if(currentPage === pages.length - 1) buildSummary();
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function buildSummary(){
+const total = Array.from(document.querySelectorAll(".product-amount")).reduce(function(sum,input){
+return sum + Number(input.value || 0);
+},0);
+document.getElementById("requestSummary").innerHTML =
+"<div><strong>PR Title</strong>" + document.getElementById("prTitle").value + "</div>" +
+"<div><strong>Category</strong>" + document.getElementById("category").value + "</div>" +
+"<div><strong>Delivery Address</strong>" + document.getElementById("address").value + "</div>" +
+"<div><strong>Expected Date</strong>" + document.getElementById("deliveryDate").value + "</div>" +
+"<div><strong>Products</strong>" + products.children.length + " item(s)</div>" +
+"<div><strong>Estimated Total</strong>" + document.getElementById("currency").value + " " +
+total.toLocaleString("en-IN",{minimumFractionDigits:2}) + "</div>";
+}
+
+nextButton.addEventListener("click",function(){if(pageIsValid()) showPage(currentPage + 1)});
+previousButton.addEventListener("click",function(){showPage(currentPage - 1)});
+document.getElementById("addProduct").addEventListener("click",addProduct);
+document.getElementById("purchaseRequestForm").addEventListener("submit",function(event){
+event.preventDefault();
+document.getElementById("toast").classList.add("show");
+setTimeout(function(){window.location.href = "dashboard.html"},1200);
+});
+addProduct();
+</script>
+</body>
+</html>

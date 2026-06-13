@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Purchase Order</title>
+<style>
+:root{
+--red:#ef2b2d;
+--blue:#002b7f;
+--ink:#171717;
+--muted:#6b7280;
+--line:#e3e5e8;
+}
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:"Segoe UI Variable Text","Segoe UI",sans-serif;
+}
+
+body{
+min-height:100vh;
+color:var(--ink);
+background:
+radial-gradient(circle at 10% 16%,rgba(239,43,45,.1),transparent 25%),
+radial-gradient(circle at 88% 10%,rgba(0,43,127,.11),transparent 28%),
+linear-gradient(135deg,#fbfcff,#fff9f8 55%,#f5f8ff);
+background-size:140% 140%;
+animation:backgroundShift 15s ease-in-out infinite alternate;
+}
+
+button,input{font:inherit}
+button{cursor:pointer}
+
+.page-header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+height:58px;
+padding:0 25px;
+border-bottom:1px solid var(--line);
+background:rgba(255,255,255,.82);
+backdrop-filter:blur(14px);
+}
+
+.page-header h1{
+font-size:28px;
+letter-spacing:-.5px;
+}
+
+.header-actions{
+display:flex;
+gap:10px;
+}
+
+.icon-button{
+display:grid;
+place-items:center;
+width:38px;
+height:38px;
+border:0;
+border-radius:50%;
+background:#fff;
+font-size:19px;
+transition:transform .2s,box-shadow .2s;
+}
+
+.icon-button:hover{
+transform:translateY(-2px);
+box-shadow:0 7px 18px rgba(0,0,0,.1);
+}
+
+.status-tabs{
+display:flex;
+gap:20px;
+padding:0 18px;
+border-bottom:1px solid var(--line);
+background:rgba(255,255,255,.76);
+}
+
+.status-tab{
+position:relative;
+display:flex;
+align-items:center;
+gap:9px;
+padding:15px 7px 13px;
+border:0;
+background:transparent;
+}
+
+.status-tab::after{
+content:"";
+position:absolute;
+right:0;
+bottom:-1px;
+left:0;
+height:3px;
+border-radius:3px 3px 0 0;
+background:transparent;
+}
+
+.status-tab.active::after{
+background:var(--red);
+}
+
+.toolbar{
+display:flex;
+align-items:center;
+min-height:48px;
+padding:0 10px;
+border-bottom:1px solid var(--line);
+background:rgba(255,255,255,.78);
+}
+
+.tool-button,
+.search-box{
+display:flex;
+align-items:center;
+gap:9px;
+min-height:38px;
+padding:8px 16px;
+border:0;
+border-right:1px solid var(--line);
+background:transparent;
+transition:color .2s,background .2s;
+}
+
+.tool-button:hover,
+.tool-button.active{
+color:var(--red);
+background:#fff8f7;
+}
+
+.search-box input{
+width:150px;
+border:0;
+background:transparent;
+outline:0;
+}
+
+.content{
+min-height:calc(100vh - 155px);
+padding:25px;
+}
+
+.order-table{
+display:none;
+width:100%;
+border-collapse:collapse;
+overflow:hidden;
+border-radius:11px;
+background:rgba(255,255,255,.88);
+box-shadow:0 12px 30px rgba(25,40,68,.08);
+}
+
+.order-table th,
+.order-table td{
+padding:15px;
+border-bottom:1px solid var(--line);
+text-align:left;
+}
+
+.order-table th{
+background:#f5f7fb;
+font-size:13px;
+}
+
+.order-table td{
+color:var(--muted);
+font-size:14px;
+}
+
+.order-table tbody tr:hover{
+background:#fafbff;
+box-shadow:inset 3px 0 var(--red);
+}
+
+.order-link{
+color:var(--blue);
+font-weight:700;
+}
+
+.status-pill{
+display:inline-block;
+padding:5px 9px;
+border-radius:15px;
+background:#fff1c7;
+color:#7b5a00;
+font-size:12px;
+font-weight:700;
+}
+
+.status-pill.past{
+background:#dcf3e3;
+color:#176b32;
+}
+
+.empty-state{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:14px;
+min-height:290px;
+color:#222;
+}
+
+.folder{
+position:relative;
+width:48px;
+height:30px;
+border-radius:3px 7px 7px 7px;
+background:#151b3d;
+transform:skewX(-8deg);
+}
+
+.folder::before{
+content:"";
+position:absolute;
+top:-10px;
+left:3px;
+width:22px;
+height:12px;
+border-radius:3px 3px 0 0;
+background:#151b3d;
+}
+
+.compact .order-table th,
+.compact .order-table td{
+padding-top:9px;
+padding-bottom:9px;
+}
+
+.toast{
+position:fixed;
+right:22px;
+bottom:22px;
+padding:11px 16px;
+border-radius:8px;
+background:#20242b;
+color:#fff;
+opacity:0;
+transform:translateY(10px);
+transition:.2s;
+}
+
+.toast.show{
+opacity:1;
+transform:translateY(0);
+}
+
+@keyframes backgroundShift{
+from{background-position:0% 20%}
+to{background-position:100% 80%}
+}
+
+@media(max-width:700px){
+.toolbar{flex-wrap:wrap}
+.search-box{width:100%;border-top:1px solid var(--line)}
+.search-box input{width:100%}
+.content{overflow-x:auto}
+.order-table{min-width:820px}
+}
+</style>
+</head>
+<body>
+<header class="page-header">
+<h1>All Purchase Order</h1>
+<div class="header-actions">
+<button class="icon-button" type="button" title="Assistant">&#10022;</button>
+<button class="icon-button" type="button" title="Notifications">&#9835;</button>
+<button class="icon-button" type="button" title="Profile">&#9786;</button>
+</div>
+</header>
+
+<section class="status-tabs">
+<button class="status-tab active" data-status="pending" type="button">
+<span>&#8987;</span> Pending
+</button>
+<button class="status-tab" data-status="past" type="button">
+<span>&#8630;</span> Past
+</button>
+</section>
+
+<section class="toolbar">
+<label class="search-box">
+<span>&#128269;</span>
+<input id="orderSearch" type="search" placeholder="Search">
+</label>
+<button class="tool-button" id="sortOrders" type="button"><span>&#8645;</span> Sort</button>
+<button class="tool-button" id="filterOrders" type="button"><span>&#8644;</span> Filter</button>
+<button class="tool-button" id="exportOrders" type="button"><span>&#8682;</span> Export PO</button>
+<button class="tool-button" id="listView" type="button"><span>&#9776;</span> List View</button>
+</section>
+
+<main class="content" id="orderContent">
+<table class="order-table" id="orderTable">
+<thead>
+<tr>
+<th>PO Number</th>
+<th>Vendor</th>
+<th>Title</th>
+<th>Amount</th>
+<th>Created On</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody id="orderRows">
+<tr data-status="past" data-amount="84250">
+<td><a class="order-link" href="invoice-review.html">PO-2600198</a></td>
+<td>ABC Logistics</td>
+<td>Laptop Accessories</td>
+<td>INR 84,250.00</td>
+<td>02-Jun-2026</td>
+<td><span class="status-pill past">Completed</span></td>
+</tr>
+<tr data-status="past" data-amount="1515632">
+<td><a class="order-link" href="invoice-review.html">PO-2600181</a></td>
+<td>Tech Solutions</td>
+<td>Network Upgrade</td>
+<td>INR 15,15,632.00</td>
+<td>18-Apr-2026</td>
+<td><span class="status-pill past">Completed</span></td>
+</tr>
+</tbody>
+</table>
+
+<div class="empty-state" id="emptyState">
+<span class="folder"></span>
+<span>No Items found</span>
+</div>
+</main>
+
+<div class="toast" id="toast"></div>
+<script>
+const tabs = document.querySelectorAll(".status-tab");
+const rows = Array.from(document.querySelectorAll("#orderRows tr"));
+const table = document.getElementById("orderTable");
+const emptyState = document.getElementById("emptyState");
+const search = document.getElementById("orderSearch");
+let activeStatus = "pending";
+let ascending = true;
+
+function filterRows(){
+const query = search.value.trim().toLowerCase();
+let visible = 0;
+
+rows.forEach(function(row){
+const show = row.dataset.status === activeStatus &&
+row.textContent.toLowerCase().includes(query);
+row.style.display = show ? "" : "none";
+if(show) visible++;
+});
+
+table.style.display = visible ? "table" : "none";
+emptyState.style.display = visible ? "none" : "flex";
+}
+
+tabs.forEach(function(tab){
+tab.addEventListener("click",function(){
+tabs.forEach(function(item){item.classList.remove("active")});
+tab.classList.add("active");
+activeStatus = tab.dataset.status;
+filterRows();
+});
+});
+
+search.addEventListener("input",filterRows);
+
+document.getElementById("sortOrders").addEventListener("click",function(){
+ascending = !ascending;
+const body = document.getElementById("orderRows");
+rows.sort(function(a,b){
+const difference = Number(a.dataset.amount) - Number(b.dataset.amount);
+return ascending ? difference : -difference;
+}).forEach(function(row){body.appendChild(row)});
+showToast("Orders sorted by amount");
+});
+
+document.getElementById("filterOrders").addEventListener("click",function(){
+this.classList.toggle("active");
+showToast(this.classList.contains("active") ? "Completed orders filter active" : "Filter cleared");
+});
+
+document.getElementById("listView").addEventListener("click",function(){
+document.getElementById("orderContent").classList.toggle("compact");
+this.classList.toggle("active");
+});
+
+document.getElementById("exportOrders").addEventListener("click",function(){
+const visibleRows = rows.filter(function(row){return row.style.display !== "none"});
+const csv = [
+["PO Number","Vendor","Title","Amount","Created On","Status"],
+...visibleRows.map(function(row){
+return Array.from(row.cells).map(function(cell){return cell.textContent.trim()});
+})
+].map(function(line){
+return line.map(function(value){return '"' + value.replace(/"/g,'""') + '"'}).join(",");
+}).join("\n");
+
+const link = document.createElement("a");
+link.href = URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+link.download = activeStatus + "-purchase-orders.csv";
+link.click();
+URL.revokeObjectURL(link.href);
+showToast("Purchase orders exported");
+});
+
+function showToast(message){
+const toast = document.getElementById("toast");
+toast.textContent = message;
+toast.classList.add("show");
+clearTimeout(showToast.timer);
+showToast.timer = setTimeout(function(){toast.classList.remove("show")},1700);
+}
+
+filterRows();
+</script>
+</body>
+</html>
