@@ -405,7 +405,7 @@ Travel Information
 
 <div class="field">
 <label>Return Date *</label>
-<input type="date" id="departureDate">
+<input type="date" id="returnDate">
 </div>
 
 <div class="field">
@@ -452,6 +452,9 @@ Submit For Approval
 const randomNo =
 Math.floor(1000 + Math.random() * 9000);
 
+document.getElementById("requestId").innerHTML =
+"TRV-" + randomNo;
+
 const employees = {
 
 "Amit Sharma": {
@@ -477,9 +480,6 @@ customerNumber: "CUS002"
 }
 
 };
-
-document.getElementById("requestId")
-.innerHTML = "TRV-" + randomNo;
 
 document.getElementById("employeeName")
 .addEventListener("change", function(){
@@ -516,7 +516,20 @@ emp.customerNumber;
 
 });
 
+document.querySelector(".submit-btn")
+.addEventListener("click", function(e){
+
+e.preventDefault();
+
+alert(
+"Travel Request Submitted Successfully\n\nRequest No : " +
+document.getElementById("requestId").innerText
+);
+
+});
+
 </script>
+
 
 </body>
 </html>
