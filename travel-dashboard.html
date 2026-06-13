@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Travel Dashboard</title>
+
+<style>
+
+body{
+font-family:Segoe UI;
+background:#f4f7fc;
+padding:30px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+h1{
+color:#002b7f;
+}
+
+.new-btn{
+background:#002b7f;
+color:white;
+padding:12px 20px;
+border-radius:10px;
+text-decoration:none;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+border-radius:12px;
+overflow:hidden;
+}
+
+th{
+background:#002b7f;
+color:white;
+padding:15px;
+text-align:left;
+}
+
+td{
+padding:15px;
+border-bottom:1px solid #eee;
+}
+
+.pending{
+color:#ff9800;
+font-weight:bold;
+}
+
+.no-data{
+text-align:center;
+padding:30px;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="header">
+
+<h1>Travel Requests Dashboard</h1>
+
+<a href="travel-request.html" class="new-btn">
++ New Request
+</a>
+
+</div>
+
+<table>
+
+<thead>
+<tr>
+<th>Request No</th>
+<th>Employee</th>
+<th>From</th>
+<th>To</th>
+<th>Travel Type</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="requestTable">
+
+</tbody>
+
+</table>
+
+<script>
+
+const table =
+document.getElementById("requestTable");
+
+let found = false;
+
+for(let i=0;i<localStorage.length;i++){
+
+const key = localStorage.key(i);
+
+if(key.startsWith("TRV-")){
+
+found = true;
+
+const req =
+JSON.parse(localStorage.getItem(key));
+
+table.innerHTML += `
+<tr>
+<td>${req.requestId}</td>
+<td>${req.employeeName}</td>
+<td>${req.fromLocation}</td>
+<td>${req.toLocation}</td>
+<td>${req.travelType}</td>
+<td class="pending">${req.status}</td>
+</tr>
+`;
+
+}
+
+}
+
+if(!found){
+
+table.innerHTML = `
+<tr>
+<td colspan="6" class="no-data">
+No Travel Requests Found
+</td>
+</tr>
+`;
+
+}
+
+</script>
+
+</body>
+</html>
