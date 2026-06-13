@@ -240,6 +240,8 @@ gap:15px;
 
 <div class="container">
 
+<form id="travelForm">
+
 <div class="top-bar">
 
 <a href="travel.html" class="back-btn">
@@ -378,7 +380,7 @@ Travel Information
 
 <div class="field">
 <label>Travel Type *</label>
-<select>
+<select id="travelType">
 <option>Flight</option>
 <option>Train</option>
 <option>Cab</option>
@@ -388,22 +390,22 @@ Travel Information
 
 <div class="field">
 <label>From Location *</label>
-<input type="text">
+<input type="text" id="fromLocation">
 </div>
 
 <div class="field">
 <label>To Location *</label>
-<input type="text">
+<input type="text" id="toLocation">
 </div>
 
 <div class="field">
 <label>Departure Date *</label>
-<input type="date">
+<input type="date" id="departureDate">
 </div>
 
 <div class="field">
 <label>Return Date *</label>
-<input type="date">
+<input type="date" id="departureDate">
 </div>
 
 <div class="field">
@@ -443,6 +445,8 @@ Submit For Approval
 
 </div>
 
+</form>
+  
 <script>
 
 const randomNo =
