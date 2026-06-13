@@ -1,825 +1,1265 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FM Logistic Portal</title>
-  
 <style>
+:root{
+--red:#ef2b2d;
+--red-dark:#d91f21;
+--blue:#002b7f;
+--ink:#171717;
+--muted:#687386;
+--line:#e5e7eb;
+--soft:#f7f8fa;
+--rose:#f8dedb;
+}
 
 *{
+box-sizing:border-box;
 margin:0;
 padding:0;
-box-sizing:border-box;
-font-family:Segoe UI,sans-serif;
-}
-
-.logo{
-text-align:center;
-margin-bottom:40px;
-}
-
-.company-logo{
-width:140px;
-height:auto;
-display:block;
-margin:0 auto 10px;
-padding:10px;
-background:white;
-border-radius:12px;
-box-shadow:0 2px 8px rgba(0,0,0,.15);
-}
-  
-.logo-circle{
-width:90px;
-height:90px;
-margin:0 auto 15px;
-background:white;
-color:#002b7f;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:36px;
-font-weight:bold;
+font-family:"Segoe UI Variable Text","Segoe UI",sans-serif;
 }
 
 body{
-background:#f4f6f9;
+min-height:100vh;
+background:#fff;
+color:var(--ink);
+}
+
+button,input,select{
+font:inherit;
+}
+
+button{
+cursor:pointer;
+}
+
+.app{
 display:flex;
+min-height:100vh;
 }
 
 .sidebar{
-width:250px;
-height:100vh;
-background:#002b7f;
-color:white;
-padding:25px;
 position:fixed;
+inset:0 auto 0 0;
+width:240px;
+padding:18px 14px;
+background:#fff;
+border-right:1px solid var(--line);
+overflow-y:auto;
+z-index:20;
 }
 
-.logo{
-margin-bottom:40px;
-}
-
-.logo h2{
-font-size:32px;
-}
-
-.logo p{
-opacity:.8;
-}
-
-.sidebar ul{
-list-style:none;
-margin-top:30px;
-}
-
-.sidebar li{
-padding:15px 18px;
-margin-bottom:10px;
-cursor:pointer;
-border-radius:12px;
-transition:all .3s ease;
-position:relative;
-font-weight:500;
-}
-
-.sidebar li:hover{
-background:rgba(255,255,255,.15);
-transform:translateX(8px);
-box-shadow:0 8px 20px rgba(0,0,0,.15);
-}
-  .sidebar li.active{
-background:white;
-color:#002b7f;
-font-weight:700;
-box-shadow:0 8px 20px rgba(0,0,0,.15);
-}
-
-.main{
-margin-left:250px;
-width:100%;
-padding:30px;
-}
-
-.topbar{
+.brand{
 display:flex;
-justify-content:space-between;
 align-items:center;
-margin-bottom:30px;
+gap:10px;
+padding:4px 8px 20px;
 }
 
-.profile{
-background:white;
-padding:12px 20px;
-border-radius:10px;
-box-shadow:0 2px 8px rgba(0,0,0,.1);
+.brand img{
+width:46px;
+height:46px;
+object-fit:contain;
+border-radius:9px;
 }
 
-.cards{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:20px;
-margin-bottom:30px;
+.brand strong{
+display:block;
+color:var(--blue);
+font-size:15px;
 }
 
-.card{
-background:white;
-padding:25px;
-border-radius:12px;
-box-shadow:0 2px 8px rgba(0,0,0,.08);
+.brand span{
+color:var(--muted);
+font-size:12px;
 }
 
-.card h3{
-color:#666;
-margin-bottom:10px;
-}
-
-.card h1{
-font-size:38px;
-}
-
-.content{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-margin-bottom:30px;
-}
-
-.panel{
-background:white;
-padding:25px;
-border-radius:12px;
-box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-.status-item{
-margin:12px 0;
-font-size:18px;
-}
-
-table{
+.nav-item,
+.nav-toggle,
+.subnav a{
+display:flex;
+align-items:center;
 width:100%;
-border-collapse:collapse;
-margin-top:15px;
+border:0;
+border-radius:6px;
+background:transparent;
+color:#222;
+text-decoration:none;
+transition:background .2s,color .2s,transform .2s;
 }
 
-th,td{
-padding:12px;
-border-bottom:1px solid #ddd;
+.nav-item,
+.nav-toggle{
+gap:12px;
+padding:12px 10px;
+font-size:15px;
 text-align:left;
 }
 
-.quick-actions{
-background:white;
-padding:25px;
-border-radius:12px;
-box-shadow:0 2px 8px rgba(0,0,0,.08);
+.nav-item:hover,
+.nav-toggle:hover{
+background:#f4f5f7;
+transform:translateX(2px);
 }
 
-.action-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-margin-top:20px;
-}
-
-.action-card{
-background:#eef3ff;
-padding:25px;
+.nav-icon{
+width:20px;
+font-size:17px;
 text-align:center;
-border-radius:12px;
-cursor:pointer;
-font-weight:600;
 }
 
-.action-card:hover{
-background:#dce7ff;
-}
-.pending{
-background:#fff3cd;
-color:#856404;
-padding:6px 12px;
-border-radius:20px;
-font-size:13px;
-font-weight:600;
+.chevron{
+margin-left:auto;
+font-size:18px;
+transition:transform .25s;
 }
 
-.approved{
-background:#d4edda;
-color:#155724;
-padding:6px 12px;
-border-radius:20px;
-font-size:13px;
-font-weight:600;
+.nav-group.open{
+padding-bottom:8px;
+border-radius:6px;
+background:var(--rose);
 }
 
-/* ===== Notification ===== */
+.nav-group.open .nav-toggle{
+font-weight:700;
+}
 
-.notification-wrapper{
+.nav-group.open .chevron{
+transform:rotate(180deg);
+}
+
+.subnav{
+display:none;
+padding:0 15px 4px;
+}
+
+.nav-group.open .subnav{
+display:block;
+animation:reveal .2s ease-out;
+}
+
+.subnav a{
+padding:9px 15px;
+margin:2px 0;
+color:#6d3c38;
+font-size:12px;
+}
+
+.subnav a:hover{
+background:rgba(255,255,255,.55);
+color:#222;
+}
+
+.subnav a.active{
+background:#fff;
+color:#5c3b38;
+box-shadow:0 2px 10px rgba(93,48,44,.06);
+}
+
+.main{
+width:calc(100% - 240px);
+margin-left:240px;
+min-width:0;
+}
+
+.page-header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+height:64px;
+padding:0 26px;
+border-bottom:1px solid var(--line);
+}
+
+.page-header h1{
+font-size:28px;
+font-weight:750;
+letter-spacing:-.5px;
+}
+
+.header-actions{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.icon-button{
 position:relative;
+display:grid;
+place-items:center;
+width:38px;
+height:38px;
+border:0;
+border-radius:50%;
+background:#fff;
+font-size:19px;
+transition:background .2s,box-shadow .2s,transform .2s;
+}
+
+.icon-button:hover{
+background:#f6f7f9;
+box-shadow:0 5px 16px rgba(0,0,0,.1);
+transform:translateY(-2px);
+}
+
+.assistant-button{
+box-shadow:0 0 18px rgba(130,90,220,.28);
 }
 
 .badge{
 position:absolute;
-top:-5px;
-right:-5px;
-width:22px;
-height:22px;
-border-radius:50%;
-background:red;
-color:white;
-font-size:11px;
-display:flex;
-align-items:center;
-justify-content:center;
+top:-2px;
+right:-2px;
+display:grid;
+place-items:center;
+min-width:17px;
+height:17px;
+padding:0 4px;
+border-radius:10px;
+background:var(--red);
+color:#fff;
+font-size:10px;
 }
 
 .notification-dropdown{
 display:none;
 position:absolute;
-right:0;
-top:70px;
-width:320px;
-background:white;
-padding:15px;
+right:54px;
+top:56px;
+width:310px;
+padding:12px;
+border:1px solid var(--line);
 border-radius:12px;
-box-shadow:0 10px 30px rgba(0,0,0,.15);
-z-index:999;
+background:#fff;
+box-shadow:0 18px 50px rgba(18,28,45,.16);
+z-index:40;
 }
 
-.notification-panel{
-display:flex;
-gap:15px;
-margin-bottom:25px;
+.notification-dropdown.open{
+display:block;
+animation:dropIn .2s ease-out;
 }
 
 .notice{
-background:white;
-padding:12px 18px;
-border-radius:10px;
-box-shadow:0 2px 8px rgba(0,0,0,.08);
-font-weight:600;
+padding:12px;
+border-radius:8px;
+background:#f7f8fa;
+font-size:14px;
 }
 
-.card:hover,
-.panel:hover,
-.action-card:hover{
-transform:translateY(-5px);
-transition:.3s;
-}
-body{
-background:linear-gradient(135deg,#f5f7fa,#eef4ff);
+.notice + .notice{
+margin-top:8px;
 }
 
-.card,
-.panel,
-.quick-actions{
-background:rgba(255,255,255,0.85);
-backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,.4);
-box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
-
-.notification-bell{
-position:relative;
-background:white;
-border:none;
-width:55px;
-height:55px;
-border-radius:50%;
-cursor:pointer;
-font-size:22px;
-box-shadow:0 8px 20px rgba(0,0,0,.12);
-transition:all .3s ease;
-}
-
-.notification-bell:hover{
-transform:translateY(-4px);
-box-shadow:0 15px 35px rgba(0,0,0,.15);
-}
-  
-.card h1{
-color:#002b7f;
-font-family:"Segoe UI Variable Display","Segoe UI",sans-serif;
-font-size:42px;
-font-weight:700;
-line-height:1.1;
-letter-spacing:-0.5px;
-font-variant-numeric:lining-nums tabular-nums;
-}
-
-.invoice-workspace{
-margin-bottom:30px;
-background:rgba(255,255,255,.9);
-border:1px solid rgba(255,255,255,.5);
-border-radius:14px;
-box-shadow:0 10px 30px rgba(0,0,0,.08);
-overflow:hidden;
-}
-
-.invoice-tabs{
+.status-tabs{
 display:flex;
-gap:28px;
-padding:0 22px;
-border-bottom:1px solid #e3e7ee;
+gap:18px;
+padding:0 25px;
+border-bottom:1px solid var(--line);
 }
 
-.invoice-tab{
+.status-tab{
 position:relative;
-padding:18px 8px 15px;
+display:flex;
+align-items:center;
+gap:9px;
+padding:16px 10px 13px;
 border:0;
 background:transparent;
-color:#4b5563;
 font-size:15px;
-font-weight:600;
-cursor:pointer;
 }
 
-.invoice-tab.active{
-color:#002b7f;
-}
-
-.invoice-tab.active::after{
+.status-tab::after{
 content:"";
 position:absolute;
 left:0;
 right:0;
 bottom:-1px;
 height:3px;
-background:#ef2b2d;
-border-radius:3px 3px 0 0;
+border-radius:4px 4px 0 0;
+background:transparent;
 }
 
-.invoice-toolbar{
+.status-tab:hover{
+color:var(--red);
+}
+
+.status-tab.active::after{
+background:var(--red);
+}
+
+.toolbar{
+position:relative;
 display:flex;
 align-items:center;
-gap:0;
-padding:10px 20px;
-border-bottom:1px solid #e3e7ee;
+min-height:48px;
+padding:0 14px;
+border-bottom:1px solid var(--line);
 }
 
-.toolbar-control{
-padding:10px 18px;
+.tool-button{
+display:flex;
+align-items:center;
+gap:9px;
+padding:10px 16px;
 border:0;
-border-right:1px solid #e3e7ee;
-background:transparent;
+border-right:1px solid var(--line);
+background:#fff;
 font-size:14px;
-font-weight:600;
-cursor:pointer;
+transition:color .2s,background .2s;
 }
 
-.toolbar-control:first-child{
-padding-left:4px;
+.tool-button:hover,
+.tool-button.active{
+color:var(--red);
+background:#fffafa;
 }
 
-.invoice-search{
-margin-left:auto;
-padding:9px 12px;
-width:210px;
-border:1px solid #d7dce5;
-border-radius:8px;
-font-size:14px;
-outline:none;
+.search-wrap{
+display:flex;
+align-items:center;
+gap:8px;
+padding-left:16px;
 }
 
-.invoice-search:focus{
-border-color:#002b7f;
-box-shadow:0 0 0 3px rgba(0,43,127,.1);
-}
-
-.invoice-body{
-padding:22px;
-}
-
-.submit-invoice{
-padding:10px 20px;
-margin-bottom:8px;
+.search-wrap input{
+width:150px;
+padding:7px 4px;
 border:0;
-border-radius:7px;
-background:#ef2b2d;
-color:white;
-font-weight:700;
-cursor:pointer;
+outline:0;
 }
 
-.submit-invoice:hover{
-background:#d91f21;
-}
-
-.invoice-table{
-margin-top:0;
-}
-
-.invoice-table th{
-color:#111827;
-font-size:14px;
-font-weight:700;
-}
-
-.invoice-table td{
-color:#4b5563;
-}
-
-.invoice-table a{
-color:#002b7f;
-font-weight:700;
-}
-
-.invoice-table .pending{
-background:#fff1c7;
-color:#856404;
-}
-
-.invoice-table .approved{
-background:#d9f2df;
-color:#176b32;
-}
-
-.paid{
-background:#dce9ff;
-color:#002b7f;
-padding:6px 12px;
-border-radius:20px;
-font-size:13px;
-font-weight:600;
-}
-
-.empty-invoices{
+.popover{
 display:none;
-padding:28px;
-color:#6b7280;
+position:absolute;
+top:52px;
+padding:15px;
+border:1px solid var(--line);
+border-radius:10px;
+background:#fff;
+box-shadow:0 16px 40px rgba(18,28,45,.14);
+z-index:30;
+}
+
+.popover.open{
+display:block;
+animation:dropIn .18s ease-out;
+}
+
+.filter-popover{
+left:205px;
+width:255px;
+}
+
+.filter-popover label{
+display:block;
+margin-bottom:6px;
+color:var(--muted);
+font-size:12px;
+font-weight:700;
+}
+
+.filter-popover select{
+width:100%;
+margin-bottom:12px;
+padding:9px;
+border:1px solid #d8dce3;
+border-radius:6px;
+background:#fff;
+}
+
+.filter-actions{
+display:flex;
+gap:8px;
+}
+
+.small-button{
+flex:1;
+padding:8px 10px;
+border:1px solid #d7dbe2;
+border-radius:6px;
+background:#fff;
+}
+
+.small-button.primary{
+border-color:var(--red);
+background:var(--red);
+color:#fff;
+}
+
+.calendar{
+left:14px;
+width:365px;
+padding:0;
+overflow:hidden;
+}
+
+.calendar-head{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:14px 16px;
+border-bottom:1px solid var(--line);
+}
+
+.calendar-head h3{
+font-size:14px;
+}
+
+.calendar-close{
+border:0;
+background:transparent;
+font-weight:700;
+}
+
+.calendar-nav{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:16px;
+}
+
+.calendar-nav button{
+width:38px;
+height:38px;
+border:0;
+border-radius:5px;
+background:#e8edf5;
+}
+
+.calendar-title{
+font-weight:700;
+}
+
+.calendar-grid{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:4px;
+padding:0 12px 14px;
 text-align:center;
 }
 
-@media(max-width:900px){
-.cards{
-grid-template-columns:repeat(2,1fr);
+.weekday{
+padding:6px 0;
+color:#7b8089;
+font-size:13px;
+font-weight:700;
 }
 
-.invoice-toolbar{
-flex-wrap:wrap;
-gap:6px;
+.day{
+height:36px;
+border:1px solid transparent;
+border-radius:18px;
+background:#fff;
+font-size:13px;
 }
 
-.invoice-search{
-margin:6px 0 0;
-width:100%;
+.day:hover:not(:disabled){
+border-color:#ffaba3;
+background:#fff0ee;
 }
 
-.invoice-body{
+.day.muted{
+color:#c7ccd4;
+}
+
+.day.in-range{
+border:1px dashed #e9a69e;
+background:#ffe0db;
+}
+
+.day.selected{
+border-color:var(--red);
+background:var(--red);
+color:#fff;
+}
+
+.content{
+padding:22px 25px 35px;
+}
+
+.create-button{
+display:inline-flex;
+align-items:center;
+gap:8px;
+margin-bottom:8px;
+padding:10px 18px;
+border:0;
+border-radius:6px;
+background:var(--red);
+color:#fff;
+font-weight:650;
+box-shadow:0 6px 14px rgba(239,43,45,.18);
+transition:background .2s,transform .2s,box-shadow .2s;
+}
+
+.create-button:hover{
+background:var(--red-dark);
+box-shadow:0 9px 20px rgba(239,43,45,.25);
+transform:translateY(-2px);
+}
+
+.table-wrap{
 overflow-x:auto;
 }
+
+.request-table{
+width:100%;
+min-width:970px;
+border-collapse:collapse;
 }
 
-.action-card{
-transition:.3s;
+.request-table th,
+.request-table td{
+padding:16px 11px;
+border-bottom:1px solid var(--line);
+text-align:left;
+vertical-align:middle;
 }
 
-.action-card:hover{
-transform:translateY(-8px);
-background:#dbe8ff;
+.request-table th{
+height:60px;
+color:#111;
+font-size:14px;
 }
 
+.request-table td{
+color:var(--muted);
+font-size:14px;
+}
+
+.request-table tbody tr{
+transition:background .2s,box-shadow .2s,transform .2s;
+}
+
+.request-table tbody tr:hover{
+background:#fafbfc;
+box-shadow:inset 3px 0 var(--red);
+}
+
+.detail-link{
+color:#111;
+font-weight:600;
+text-decoration:underline;
+}
+
+.status-pill{
+display:inline-block;
+padding:5px 9px;
+border-radius:14px;
+background:#fff1c7;
+color:#7b5a00;
+font-size:12px;
+font-weight:700;
+}
+
+.status-pill.declined{
+background:#ffe0df;
+color:#a51d20;
+}
+
+.status-pill.completed{
+background:#dcf3e3;
+color:#176b32;
+}
+
+.action-cell{
+white-space:nowrap;
+}
+
+.view-button,
+.more-button{
+border:1px solid #222;
+border-radius:6px;
+background:#fff;
+transition:background .2s,transform .2s;
+}
+
+.view-button{
+padding:7px 14px;
+}
+
+.more-button{
+margin-left:6px;
+padding:7px 10px;
+border-color:#e2e5ea;
+font-weight:900;
+}
+
+.view-button:hover,
+.more-button:hover{
+background:#f2f3f5;
+transform:translateY(-1px);
+}
+
+.row-menu{
+display:none;
+position:absolute;
+right:28px;
+width:135px;
+padding:6px;
+border:1px solid var(--line);
+border-radius:8px;
+background:#fff;
+box-shadow:0 12px 30px rgba(0,0,0,.12);
+z-index:10;
+}
+
+.row-menu.open{
+display:block;
+}
+
+.row-menu button{
+display:block;
+width:100%;
+padding:8px;
+border:0;
+border-radius:5px;
+background:#fff;
+text-align:left;
+}
+
+.row-menu button:hover{
+background:#f5f6f8;
+}
+
+.empty-state{
+display:none;
+padding:50px 20px;
+color:var(--muted);
+text-align:center;
+}
+
+.compact .request-table th,
+.compact .request-table td{
+padding-top:10px;
+padding-bottom:10px;
+}
+
+.toast{
+position:fixed;
+right:22px;
+bottom:22px;
+padding:11px 16px;
+border-radius:8px;
+background:#20242b;
+color:#fff;
+font-size:13px;
+opacity:0;
+transform:translateY(12px);
+pointer-events:none;
+transition:opacity .2s,transform .2s;
+z-index:80;
+}
+
+.toast.show{
+opacity:1;
+transform:translateY(0);
+}
+
+@keyframes reveal{
+from{opacity:0;transform:translateY(-5px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes dropIn{
+from{opacity:0;transform:translateY(-7px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+@media(max-width:850px){
+.sidebar{
+width:74px;
+padding:16px 9px;
+}
+
+.brand div,
+.nav-label,
+.chevron,
+.subnav{
+display:none!important;
+}
+
+.brand img{
+width:42px;
+}
+
+.nav-item,
+.nav-toggle{
+justify-content:center;
+}
+
+.main{
+width:calc(100% - 74px);
+margin-left:74px;
+}
+
+.page-header h1{
+font-size:22px;
+}
+
+.toolbar{
+flex-wrap:wrap;
+padding:6px;
+}
+
+.search-wrap{
+width:100%;
+padding:4px 12px;
+border-top:1px solid var(--line);
+}
+
+.search-wrap input{
+width:100%;
+}
+}
 </style>
-
 </head>
-
 <body>
-
-<div class="sidebar">
-
-<div class="logo">
-
-<img src="LOGO.jpg" class="company-logo">
-  
-<h2 style="font-size:18px;margin-top:10px;">
-Nidhi Gajjar
-</h2>
-
-<p style="font-size:13px;opacity:0.8;">
-reception@fmlogistic.com
-</p>
-
-</div>
-
-<ul>
-  
-<li onclick="window.location.href='invoice.html'">Invoice Management</li>
-
-<li onclick="window.location.href='travel.html'">Travel Requests</li>
-
-<li onclick="window.location.href='hotel.html'">Hotel Bookings</li>
-
-<li onclick="window.location.href='reports.html'">Reports</li>
-
-<li onclick="window.location.href='settings.html'">Settings</li>
-</ul>
-
-</div>
-
-<div class="main">
-
-<!-- Dashboard Header -->
-
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;">
-
+<div class="app">
+<aside class="sidebar">
+<div class="brand">
+<img src="LOGO.jpg" alt="FM Logistic">
 <div>
-<h1 style="font-size:32px;color:#002b7f;">Dashboard</h1>
-<p style="color:#666;margin-top:8px;">
-Welcome back, Nidhi Gajjar
-</p>
+<strong>FM Logistic</strong>
+<span>Business Portal</span>
+</div>
 </div>
 
-<div class="notification-wrapper">
+<nav>
+<a class="nav-item" href="dashboard.html">
+<span class="nav-icon">&#9638;</span><span class="nav-label">Home</span>
+</a>
 
-<button id="bellBtn" class="notification-bell">
-🔔
-<span class="badge">5</span>
+<div class="nav-group">
+<button class="nav-toggle" type="button">
+<span class="nav-icon">&#10003;</span><span class="nav-label">Approvals</span>
+<span class="chevron">&#8964;</span>
+</button>
+<div class="subnav">
+<a href="approval.html">Approval Queue</a>
+<a href="invoice-review.html">Invoice Review</a>
+</div>
+</div>
+
+<div class="nav-group">
+<button class="nav-toggle" type="button">
+<span class="nav-icon">&#8364;</span><span class="nav-label">Expense</span>
+<span class="chevron">&#8964;</span>
+</button>
+<div class="subnav">
+<a href="invoice.html">Claims</a>
+<a href="reports.html">Expense Reports</a>
+</div>
+</div>
+
+<div class="nav-group open">
+<button class="nav-toggle" type="button">
+<span class="nav-icon">&#9635;</span><span class="nav-label">Procure to Pay</span>
+<span class="chevron">&#8964;</span>
+</button>
+<div class="subnav">
+<a href="dashboard.html">Home</a>
+<a href="invoice.html">Invoices</a>
+<a class="active" href="dashboard.html">Purchase Request</a>
+<a href="approval.html">Purchase Order</a>
+<a href="reports.html">GRN</a>
+<a href="settings.html">Vendor</a>
+</div>
+</div>
+
+<div class="nav-group">
+<button class="nav-toggle" type="button">
+<span class="nav-icon">&#9634;</span><span class="nav-label">Travel</span>
+<span class="chevron">&#8964;</span>
+</button>
+<div class="subnav">
+<a href="travel.html">Travel Requests</a>
+<a href="hotel.html">Hotel Bookings</a>
+</div>
+</div>
+
+<a class="nav-item" href="reports.html">
+<span class="nav-icon">&#9636;</span><span class="nav-label">Reports</span>
+</a>
+<a class="nav-item" href="settings.html">
+<span class="nav-icon">&#9881;</span><span class="nav-label">Settings</span>
+</a>
+</nav>
+</aside>
+
+<main class="main">
+<header class="page-header">
+<h1>All Purchase Request</h1>
+<div class="header-actions">
+<button class="icon-button assistant-button" type="button" title="Assistant">&#10022;</button>
+<button class="icon-button" id="bellBtn" type="button" title="Notifications">
+&#9835;<span class="badge">5</span>
+</button>
+<button class="icon-button" type="button" title="Profile">&#9786;</button>
+</div>
+
+<div class="notification-dropdown" id="notificationDropdown">
+<div class="notice">Invoice INV001 pending approval</div>
+<div class="notice">Purchase request PR-0002254 is waiting</div>
+<div class="notice">Travel request approved</div>
+</div>
+</header>
+
+<section class="status-tabs" aria-label="Request status">
+<button class="status-tab active" data-status="pending" type="button">
+<span>&#8987;</span> Pending
+</button>
+<button class="status-tab" data-status="declined" type="button">
+<span>&#8630;</span> Declined
+</button>
+<button class="status-tab" data-status="completed" type="button">
+<span>&#8635;</span> Completed
+</button>
+</section>
+
+<section class="toolbar">
+<button class="tool-button" id="dateButton" type="button">
+<span>&#128197;</span><span id="dateLabel">15 Dec - 14 Jun 26</span>
+</button>
+<button class="tool-button" id="sortButton" type="button">
+<span>&#8645;</span> Sort
+</button>
+<button class="tool-button" id="filterButton" type="button">
+<span>&#8644;</span> Filter
+</button>
+<button class="tool-button" id="exportButton" type="button">
+<span>&#8682;</span> Export
+</button>
+<button class="tool-button" id="viewToggle" type="button">
+<span>&#9776;</span> List View
+</button>
+<label class="search-wrap">
+<span>&#128269;</span>
+<input id="searchInput" type="search" placeholder="Search">
+</label>
+
+<div class="popover calendar" id="calendarPopover">
+<div class="calendar-head">
+<h3>Select Dates</h3>
+<button class="calendar-close" id="calendarClose" type="button">&times; Close</button>
+</div>
+<div class="calendar-nav">
+<button id="previousMonth" type="button">&#8249;</button>
+<span class="calendar-title" id="calendarTitle"></span>
+<button id="nextMonth" type="button">&#8250;</button>
+</div>
+<div class="calendar-grid" id="calendarGrid"></div>
+</div>
+
+<div class="popover filter-popover" id="filterPopover">
+<label for="categoryFilter">Category</label>
+<select id="categoryFilter">
+<option value="">All categories</option>
+<option value="Printing & Stationery">Printing &amp; Stationery</option>
+<option value="IT Equipment">IT Equipment</option>
+<option value="Facility">Facility</option>
+</select>
+<label for="amountFilter">Maximum amount</label>
+<select id="amountFilter">
+<option value="">Any amount</option>
+<option value="10000">Up to INR 10,000</option>
+<option value="50000">Up to INR 50,000</option>
+<option value="2000000">Up to INR 20,00,000</option>
+</select>
+<div class="filter-actions">
+<button class="small-button" id="clearFilter" type="button">Clear</button>
+<button class="small-button primary" id="applyFilter" type="button">Apply</button>
+</div>
+</div>
+</section>
+
+<section class="content" id="requestContent">
+<button class="create-button" type="button" onclick="window.location.href='invoice.html'">
+<span>&#128196;</span> Create PR
 </button>
 
-<div id="notificationDropdown" class="notification-dropdown">
-
-<div style="padding:12px;border-radius:8px;background:#f8fafc;margin-bottom:8px;">
-📄 Invoice INV001 Pending Approval
-</div>
-
-<div style="padding:12px;border-radius:8px;background:#f8fafc;margin-bottom:8px;">
-👤 Visitor Request Waiting
-</div>
-
-<div style="padding:12px;border-radius:8px;background:#f8fafc;">
-✈ Travel Request Approved
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- KPI CARDS -->
-
-<div class="cards">
-
-<div class="card">
-<h3>Total Invoices</h3>
-<h1>150</h1>
-</div>
-
-<div class="card">
-<h3>Pending Approval</h3>
-<h1>20</h1>
-</div>
-
-<div class="card">
-<h3>Approved</h3>
-<h1>100</h1>
-</div>
-
-<div class="card">
-<h3>Paid</h3>
-<h1>30</h1>
-</div>
-
-</div>
-  
-<!-- CONTENT -->
-
-<section class="invoice-workspace">
-
-<div class="invoice-tabs" aria-label="Invoice status">
-<button class="invoice-tab" data-status="draft">Draft</button>
-<button class="invoice-tab active" data-status="pending">Pending</button>
-<button class="invoice-tab" data-status="completed">Completed</button>
-</div>
-
-<div class="invoice-toolbar">
-<button class="toolbar-control" type="button">15 Dec - 14 Jun 26</button>
-<button class="toolbar-control" type="button">Filter</button>
-<button class="toolbar-control" type="button" id="exportInvoices">Export</button>
-<button class="toolbar-control" type="button">List View</button>
-<input class="invoice-search" id="invoiceSearch" type="search" placeholder="Search invoices">
-</div>
-
-<div class="invoice-body">
-<button class="submit-invoice" type="button"
-onclick="window.location.href='invoice.html'">Submit Invoice</button>
-
-<table class="invoice-table">
+<div class="table-wrap">
+<table class="request-table">
 <thead>
 <tr>
 <th>Details</th>
-<th>Bill Number</th>
-<th>Vendor</th>
+<th>Amount</th>
+<th>Title</th>
 <th>Pending With</th>
+<th>PO Number</th>
+<th>PR Type</th>
 <th>Status</th>
+<th>Category</th>
+<th>Date</th>
+<th>Actions</th>
 </tr>
 </thead>
-<tbody id="invoiceRows">
-<tr data-status="pending">
-<td><a href="invoice.html">VI-FMLOG-000037594</a></td>
-<td>5060</td>
-<td>Gurmeet Singh</td>
-<td>Finance Team</td>
-<td><span class="pending">Pending</span></td>
-</tr>
-<tr data-status="draft">
-<td><a href="invoice.html">VI-FMLOG-000037595</a></td>
-<td>5061</td>
-<td>ABC Logistics</td>
+<tbody id="requestRows">
+<tr data-status="pending" data-category="Printing & Stationery" data-amount="5339.45">
+<td><a class="detail-link" href="invoice-review.html">PR-0002254</a></td>
+<td>INR 5,339.45</td>
+<td>Stationery June 26</td>
+<td>Procurement Pending</td>
 <td>-</td>
-<td><span class="pending">Draft</span></td>
+<td>Request for Purchase</td>
+<td><span class="status-pill">Pending</span></td>
+<td>Printing &amp; Stationery</td>
+<td>26-05-2026</td>
+<td class="action-cell">
+<button class="view-button" type="button" onclick="window.location.href='invoice-review.html'">&#8599; View</button>
+<button class="more-button" type="button" aria-label="More actions">&#8942;</button>
+</td>
 </tr>
-<tr data-status="completed">
-<td><a href="invoice.html">VI-FMLOG-000037596</a></td>
-<td>5062</td>
-<td>XYZ Transport</td>
+<tr data-status="pending" data-category="IT Equipment" data-amount="84250">
+<td><a class="detail-link" href="invoice-review.html">PR-0002258</a></td>
+<td>INR 84,250.00</td>
+<td>Laptop Accessories</td>
+<td>IT Manager</td>
 <td>-</td>
-<td><span class="approved">Completed</span></td>
+<td>Request for Purchase</td>
+<td><span class="status-pill">Pending</span></td>
+<td>IT Equipment</td>
+<td>02-06-2026</td>
+<td class="action-cell">
+<button class="view-button" type="button" onclick="window.location.href='invoice-review.html'">&#8599; View</button>
+<button class="more-button" type="button" aria-label="More actions">&#8942;</button>
+</td>
 </tr>
-<tr data-status="completed">
-<td><a href="invoice.html">VI-FMLOG-000037597</a></td>
-<td>5063</td>
-<td>Tech Solutions</td>
+<tr data-status="declined" data-category="Facility" data-amount="24500">
+<td><a class="detail-link" href="invoice-review.html">PR-0002241</a></td>
+<td>INR 24,500.00</td>
+<td>Office Maintenance</td>
 <td>-</td>
-<td><span class="paid">Paid</span></td>
+<td>-</td>
+<td>Service Request</td>
+<td><span class="status-pill declined">Declined</span></td>
+<td>Facility</td>
+<td>12-05-2026</td>
+<td class="action-cell">
+<button class="view-button" type="button" onclick="window.location.href='invoice-review.html'">&#8599; View</button>
+<button class="more-button" type="button" aria-label="More actions">&#8942;</button>
+</td>
+</tr>
+<tr data-status="completed" data-category="IT Equipment" data-amount="1515632">
+<td><a class="detail-link" href="invoice-review.html">PR-0002198</a></td>
+<td>INR 15,15,632.00</td>
+<td>Network Upgrade</td>
+<td>-</td>
+<td>PO-2600198</td>
+<td>Capital Purchase</td>
+<td><span class="status-pill completed">Completed</span></td>
+<td>IT Equipment</td>
+<td>18-04-2026</td>
+<td class="action-cell">
+<button class="view-button" type="button" onclick="window.location.href='invoice-review.html'">&#8599; View</button>
+<button class="more-button" type="button" aria-label="More actions">&#8942;</button>
+</td>
 </tr>
 </tbody>
 </table>
-
-<div class="empty-invoices" id="emptyInvoices">No matching invoices found.</div>
 </div>
-
+<div class="empty-state" id="emptyState">No purchase requests match your selection.</div>
 </section>
-
-<!-- QUICK ACTIONS -->
-
-<div class="quick-actions">
-
-<h2>Quick Actions</h2>
-
-<div class="action-grid">
-
-<div class="action-card">
-Upload Invoice
+</main>
 </div>
 
-<div class="action-card">
-Visitor Entry
+<div class="row-menu" id="rowMenu">
+<button type="button" onclick="window.location.href='invoice-review.html'">Open details</button>
+<button type="button" id="copyNumber">Copy PR number</button>
 </div>
+<div class="toast" id="toast"></div>
 
-<div class="action-card">
-Travel Request
-</div>
+<script>
+const rows = Array.from(document.querySelectorAll("#requestRows tr"));
+const tabs = document.querySelectorAll(".status-tab");
+const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+const amountFilter = document.getElementById("amountFilter");
+const emptyState = document.getElementById("emptyState");
+let activeStatus = "pending";
+let sortAscending = true;
 
-<div class="action-card">
-Hotel Booking
-</div>
-
-<div class="action-card">
-Reports
-</div>
-
-<div class="action-card">
-Settings
-</div>
-
-</div>
-
-</div>
-
-  <script>
-
-function playNotificationSound(){
-const AudioContext =
-window.AudioContext || window.webkitAudioContext;
-
-if(!AudioContext) return;
-
-const audioContext = new AudioContext();
-const notes = [
-{ frequency:660, start:0, duration:0.12 },
-{ frequency:880, start:0.13, duration:0.18 }
-];
-
-notes.forEach(function(note){
-const oscillator = audioContext.createOscillator();
-const gain = audioContext.createGain();
-const startTime = audioContext.currentTime + note.start;
-const endTime = startTime + note.duration;
-
-oscillator.type = "sine";
-oscillator.frequency.value = note.frequency;
-gain.gain.setValueAtTime(0.0001,startTime);
-gain.gain.exponentialRampToValueAtTime(0.18,startTime + 0.02);
-gain.gain.exponentialRampToValueAtTime(0.0001,endTime);
-
-oscillator.connect(gain);
-gain.connect(audioContext.destination);
-oscillator.start(startTime);
-oscillator.stop(endTime);
-});
-
-setTimeout(function(){
-audioContext.close();
-},500);
-}
-
-document.getElementById("bellBtn")
-.addEventListener("click",function(){
-
-const dropdown =
-document.getElementById("notificationDropdown");
-
-const isOpening = dropdown.style.display !== "block";
-dropdown.style.display = isOpening ? "block" : "none";
-
-if(isOpening){
-playNotificationSound();
-}
-
-});
-
-const invoiceTabs = document.querySelectorAll(".invoice-tab");
-const invoiceSearch = document.getElementById("invoiceSearch");
-const invoiceRows = Array.from(
-document.querySelectorAll("#invoiceRows tr")
-);
-const emptyInvoices = document.getElementById("emptyInvoices");
-let activeInvoiceStatus = "pending";
-
-function filterInvoices(){
-const searchText = invoiceSearch.value.trim().toLowerCase();
-let visibleCount = 0;
-
-invoiceRows.forEach(function(row){
-const matchesStatus =
-row.dataset.status === activeInvoiceStatus;
-const matchesSearch =
-row.textContent.toLowerCase().includes(searchText);
-const isVisible = matchesStatus && matchesSearch;
-
-row.style.display = isVisible ? "" : "none";
-if(isVisible) visibleCount++;
-});
-
-emptyInvoices.style.display =
-visibleCount === 0 ? "block" : "none";
-}
-
-invoiceTabs.forEach(function(tab){
-tab.addEventListener("click",function(){
-invoiceTabs.forEach(function(item){
-item.classList.remove("active");
-});
-
-tab.classList.add("active");
-activeInvoiceStatus = tab.dataset.status;
-filterInvoices();
-});
-});
-
-invoiceSearch.addEventListener("input",filterInvoices);
-
-document.getElementById("exportInvoices")
-.addEventListener("click",function(){
-const visibleRows = invoiceRows.filter(function(row){
+function visibleRows(){
+return rows.filter(function(row){
 return row.style.display !== "none";
 });
+}
 
-const csvRows = [
-["Details","Bill Number","Vendor","Pending With","Status"]
-];
+function filterRows(){
+const query = searchInput.value.trim().toLowerCase();
+const category = categoryFilter.value;
+const maximum = Number(amountFilter.value || Infinity);
+let count = 0;
 
-visibleRows.forEach(function(row){
-csvRows.push(Array.from(row.cells).map(function(cell){
-return cell.textContent.trim();
-}));
+rows.forEach(function(row){
+const matchesStatus = row.dataset.status === activeStatus;
+const matchesSearch = row.textContent.toLowerCase().includes(query);
+const matchesCategory = !category || row.dataset.category === category;
+const matchesAmount = Number(row.dataset.amount) <= maximum;
+const show = matchesStatus && matchesSearch && matchesCategory && matchesAmount;
+
+row.style.display = show ? "" : "none";
+if(show) count++;
 });
 
-const csv = csvRows.map(function(row){
-return row.map(function(value){
+emptyState.style.display = count ? "none" : "block";
+}
+
+tabs.forEach(function(tab){
+tab.addEventListener("click",function(){
+tabs.forEach(function(item){ item.classList.remove("active"); });
+tab.classList.add("active");
+activeStatus = tab.dataset.status;
+filterRows();
+});
+});
+
+searchInput.addEventListener("input",filterRows);
+
+document.querySelectorAll(".nav-toggle").forEach(function(button){
+button.addEventListener("click",function(){
+const group = button.closest(".nav-group");
+document.querySelectorAll(".nav-group").forEach(function(item){
+if(item !== group) item.classList.remove("open");
+});
+group.classList.toggle("open");
+});
+});
+
+const filterPopover = document.getElementById("filterPopover");
+const filterButton = document.getElementById("filterButton");
+filterButton.addEventListener("click",function(event){
+event.stopPropagation();
+filterPopover.classList.toggle("open");
+calendarPopover.classList.remove("open");
+});
+
+document.getElementById("applyFilter").addEventListener("click",function(){
+filterRows();
+filterPopover.classList.remove("open");
+filterButton.classList.toggle("active",Boolean(categoryFilter.value || amountFilter.value));
+showToast("Filters applied");
+});
+
+document.getElementById("clearFilter").addEventListener("click",function(){
+categoryFilter.value = "";
+amountFilter.value = "";
+filterButton.classList.remove("active");
+filterRows();
+});
+
+document.getElementById("sortButton").addEventListener("click",function(){
+sortAscending = !sortAscending;
+const body = document.getElementById("requestRows");
+rows.sort(function(a,b){
+const difference = Number(a.dataset.amount) - Number(b.dataset.amount);
+return sortAscending ? difference : -difference;
+}).forEach(function(row){ body.appendChild(row); });
+showToast("Sorted by amount " + (sortAscending ? "low to high" : "high to low"));
+});
+
+document.getElementById("viewToggle").addEventListener("click",function(){
+document.getElementById("requestContent").classList.toggle("compact");
+this.classList.toggle("active");
+showToast(this.classList.contains("active") ? "Compact list enabled" : "Comfortable list enabled");
+});
+
+document.getElementById("exportButton").addEventListener("click",function(){
+const csv = [
+["Details","Amount","Title","Pending With","PO Number","PR Type","Status","Category","Date"],
+...visibleRows().map(function(row){
+return Array.from(row.cells).slice(0,-1).map(function(cell){
+return cell.textContent.trim();
+});
+})
+].map(function(line){
+return line.map(function(value){
 return '"' + value.replace(/"/g,'""') + '"';
 }).join(",");
 }).join("\n");
 
-const downloadLink = document.createElement("a");
-downloadLink.href = URL.createObjectURL(
-new Blob([csv],{ type:"text/csv" })
-);
-downloadLink.download = activeInvoiceStatus + "-invoices.csv";
-downloadLink.click();
-URL.revokeObjectURL(downloadLink.href);
+const link = document.createElement("a");
+link.href = URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+link.download = activeStatus + "-purchase-requests.csv";
+link.click();
+URL.revokeObjectURL(link.href);
+showToast("Visible requests exported");
 });
 
-filterInvoices();
+const notificationDropdown = document.getElementById("notificationDropdown");
+document.getElementById("bellBtn").addEventListener("click",function(event){
+event.stopPropagation();
+notificationDropdown.classList.toggle("open");
+if(notificationDropdown.classList.contains("open")) playNotificationSound();
+});
 
+function playNotificationSound(){
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+if(!AudioContext) return;
+const context = new AudioContext();
+[660,880].forEach(function(frequency,index){
+const oscillator = context.createOscillator();
+const gain = context.createGain();
+const start = context.currentTime + index * .13;
+oscillator.frequency.value = frequency;
+gain.gain.setValueAtTime(.0001,start);
+gain.gain.exponentialRampToValueAtTime(.14,start + .02);
+gain.gain.exponentialRampToValueAtTime(.0001,start + .16);
+oscillator.connect(gain);
+gain.connect(context.destination);
+oscillator.start(start);
+oscillator.stop(start + .17);
+});
+setTimeout(function(){ context.close(); },500);
+}
+
+const calendarPopover = document.getElementById("calendarPopover");
+const calendarGrid = document.getElementById("calendarGrid");
+const calendarTitle = document.getElementById("calendarTitle");
+let calendarDate = new Date(2026,5,1);
+let rangeStart = new Date(2025,11,15);
+let rangeEnd = new Date(2026,5,14);
+
+function sameDate(a,b){
+return a && b &&
+a.getFullYear() === b.getFullYear() &&
+a.getMonth() === b.getMonth() &&
+a.getDate() === b.getDate();
+}
+
+function renderCalendar(){
+calendarGrid.innerHTML = "";
+["S","M","T","W","T","F","S"].forEach(function(day){
+const label = document.createElement("span");
+label.className = "weekday";
+label.textContent = day;
+calendarGrid.appendChild(label);
+});
+
+calendarTitle.textContent = calendarDate.toLocaleString("en-US",{
+month:"long",year:"numeric"
+});
+
+const year = calendarDate.getFullYear();
+const month = calendarDate.getMonth();
+const firstDay = new Date(year,month,1).getDay();
+const daysInMonth = new Date(year,month + 1,0).getDate();
+const previousDays = new Date(year,month,0).getDate();
+
+for(let cell=0;cell<42;cell++){
+const button = document.createElement("button");
+button.className = "day";
+let date;
+
+if(cell < firstDay){
+date = new Date(year,month - 1,previousDays - firstDay + cell + 1);
+button.classList.add("muted");
+}else if(cell >= firstDay + daysInMonth){
+date = new Date(year,month + 1,cell - firstDay - daysInMonth + 1);
+button.classList.add("muted");
+}else{
+date = new Date(year,month,cell - firstDay + 1);
+}
+
+button.textContent = date.getDate();
+if(rangeStart && rangeEnd && date > rangeStart && date < rangeEnd){
+button.classList.add("in-range");
+}
+if(sameDate(date,rangeStart) || sameDate(date,rangeEnd)){
+button.classList.add("selected");
+}
+
+button.addEventListener("click",function(){
+if(!rangeStart || rangeEnd){
+rangeStart = date;
+rangeEnd = null;
+}else if(date < rangeStart){
+rangeEnd = rangeStart;
+rangeStart = date;
+}else{
+rangeEnd = date;
+}
+renderCalendar();
+if(rangeStart && rangeEnd){
+document.getElementById("dateLabel").textContent =
+formatDate(rangeStart) + " - " + formatDate(rangeEnd);
+showToast("Date range updated");
+}
+});
+calendarGrid.appendChild(button);
+}
+}
+
+function formatDate(date){
+return date.toLocaleDateString("en-GB",{
+day:"2-digit",month:"short",year:"2-digit"
+});
+}
+
+document.getElementById("dateButton").addEventListener("click",function(event){
+event.stopPropagation();
+calendarPopover.classList.toggle("open");
+filterPopover.classList.remove("open");
+renderCalendar();
+});
+
+document.getElementById("calendarClose").addEventListener("click",function(){
+calendarPopover.classList.remove("open");
+});
+
+document.getElementById("previousMonth").addEventListener("click",function(){
+calendarDate.setMonth(calendarDate.getMonth() - 1);
+renderCalendar();
+});
+
+document.getElementById("nextMonth").addEventListener("click",function(){
+calendarDate.setMonth(calendarDate.getMonth() + 1);
+renderCalendar();
+});
+
+const rowMenu = document.getElementById("rowMenu");
+let selectedPr = "";
+document.querySelectorAll(".more-button").forEach(function(button){
+button.addEventListener("click",function(event){
+event.stopPropagation();
+const row = button.closest("tr");
+const rect = button.getBoundingClientRect();
+selectedPr = row.cells[0].textContent.trim();
+rowMenu.style.top = rect.bottom + window.scrollY + 5 + "px";
+rowMenu.classList.toggle("open");
+});
+});
+
+document.getElementById("copyNumber").addEventListener("click",function(){
+navigator.clipboard.writeText(selectedPr).then(function(){
+showToast(selectedPr + " copied");
+});
+rowMenu.classList.remove("open");
+});
+
+document.addEventListener("click",function(event){
+if(!filterPopover.contains(event.target)) filterPopover.classList.remove("open");
+if(!calendarPopover.contains(event.target)) calendarPopover.classList.remove("open");
+if(!notificationDropdown.contains(event.target)) notificationDropdown.classList.remove("open");
+if(!rowMenu.contains(event.target)) rowMenu.classList.remove("open");
+});
+
+function showToast(message){
+const toast = document.getElementById("toast");
+toast.textContent = message;
+toast.classList.add("show");
+clearTimeout(showToast.timer);
+showToast.timer = setTimeout(function(){
+toast.classList.remove("show");
+},1800);
+}
+
+filterRows();
 </script>
-
-</div>
-  
 </body>
 </html>
