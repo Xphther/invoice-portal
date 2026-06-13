@@ -448,8 +448,69 @@ Submit For Approval
 const randomNo =
 Math.floor(1000 + Math.random() * 9000);
 
+const employees = {
+
+"Amit Sharma": {
+employeeId: "EMP001",
+location: "Mumbai",
+department: "Operations",
+costCenter: "MUM001",
+reportingManager: "Rajesh Kumar",
+reportingDirector: "Sanjay Mehta",
+customerName: "Amazon",
+customerNumber: "CUS001"
+},
+
+"Rahul Verma": {
+employeeId: "EMP002",
+location: "Delhi",
+department: "Transport",
+costCenter: "DEL001",
+reportingManager: "Vikas Sharma",
+reportingDirector: "Anil Gupta",
+customerName: "Flipkart",
+customerNumber: "CUS002"
+}
+
+};
+
 document.getElementById("requestId")
 .innerHTML = "TRV-" + randomNo;
+
+document.getElementById("employeeName")
+.addEventListener("change", function(){
+
+const emp = employees[this.value];
+
+if(!emp){
+return;
+}
+
+document.getElementById("employeeId").value =
+emp.employeeId;
+
+document.getElementById("location").value =
+emp.location;
+
+document.getElementById("department").value =
+emp.department;
+
+document.getElementById("costCenter").value =
+emp.costCenter;
+
+document.getElementById("reportingManager").value =
+emp.reportingManager;
+
+document.getElementById("reportingDirector").value =
+emp.reportingDirector;
+
+document.getElementById("customerName").value =
+emp.customerName;
+
+document.getElementById("CustomerUniqueNumber").value =
+emp.customerNumber;
+
+});
 
 </script>
 
