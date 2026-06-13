@@ -311,6 +311,169 @@ letter-spacing:-0.5px;
 font-variant-numeric:lining-nums tabular-nums;
 }
 
+.invoice-workspace{
+margin-bottom:30px;
+background:rgba(255,255,255,.9);
+border:1px solid rgba(255,255,255,.5);
+border-radius:14px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+overflow:hidden;
+}
+
+.invoice-tabs{
+display:flex;
+gap:28px;
+padding:0 22px;
+border-bottom:1px solid #e3e7ee;
+}
+
+.invoice-tab{
+position:relative;
+padding:18px 8px 15px;
+border:0;
+background:transparent;
+color:#4b5563;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+}
+
+.invoice-tab.active{
+color:#002b7f;
+}
+
+.invoice-tab.active::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-1px;
+height:3px;
+background:#ef2b2d;
+border-radius:3px 3px 0 0;
+}
+
+.invoice-toolbar{
+display:flex;
+align-items:center;
+gap:0;
+padding:10px 20px;
+border-bottom:1px solid #e3e7ee;
+}
+
+.toolbar-control{
+padding:10px 18px;
+border:0;
+border-right:1px solid #e3e7ee;
+background:transparent;
+font-size:14px;
+font-weight:600;
+cursor:pointer;
+}
+
+.toolbar-control:first-child{
+padding-left:4px;
+}
+
+.invoice-search{
+margin-left:auto;
+padding:9px 12px;
+width:210px;
+border:1px solid #d7dce5;
+border-radius:8px;
+font-size:14px;
+outline:none;
+}
+
+.invoice-search:focus{
+border-color:#002b7f;
+box-shadow:0 0 0 3px rgba(0,43,127,.1);
+}
+
+.invoice-body{
+padding:22px;
+}
+
+.submit-invoice{
+padding:10px 20px;
+margin-bottom:8px;
+border:0;
+border-radius:7px;
+background:#ef2b2d;
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+.submit-invoice:hover{
+background:#d91f21;
+}
+
+.invoice-table{
+margin-top:0;
+}
+
+.invoice-table th{
+color:#111827;
+font-size:14px;
+font-weight:700;
+}
+
+.invoice-table td{
+color:#4b5563;
+}
+
+.invoice-table a{
+color:#002b7f;
+font-weight:700;
+}
+
+.invoice-table .pending{
+background:#fff1c7;
+color:#856404;
+}
+
+.invoice-table .approved{
+background:#d9f2df;
+color:#176b32;
+}
+
+.paid{
+background:#dce9ff;
+color:#002b7f;
+padding:6px 12px;
+border-radius:20px;
+font-size:13px;
+font-weight:600;
+}
+
+.empty-invoices{
+display:none;
+padding:28px;
+color:#6b7280;
+text-align:center;
+}
+
+@media(max-width:900px){
+.cards{
+grid-template-columns:repeat(2,1fr);
+}
+
+.invoice-toolbar{
+flex-wrap:wrap;
+gap:6px;
+}
+
+.invoice-search{
+margin:6px 0 0;
+width:100%;
+}
+
+.invoice-body{
+overflow-x:auto;
+}
+}
+
 .action-card{
 transition:.3s;
 }
@@ -425,69 +588,72 @@ Welcome back, Nidhi Gajjar
   
 <!-- CONTENT -->
 
-<div class="content">
+<section class="invoice-workspace">
 
-<div class="panel">
-
-<h2>Invoice Status Overview</h2>
-
-<div style="margin-top:25px;">
-
-<div class="status-item">
-Pending : 20
+<div class="invoice-tabs" aria-label="Invoice status">
+<button class="invoice-tab" data-status="draft">Draft</button>
+<button class="invoice-tab active" data-status="pending">Pending</button>
+<button class="invoice-tab" data-status="completed">Completed</button>
 </div>
 
-<div class="status-item">
-Approved : 100
+<div class="invoice-toolbar">
+<button class="toolbar-control" type="button">15 Dec - 14 Jun 26</button>
+<button class="toolbar-control" type="button">Filter</button>
+<button class="toolbar-control" type="button" id="exportInvoices">Export</button>
+<button class="toolbar-control" type="button">List View</button>
+<input class="invoice-search" id="invoiceSearch" type="search" placeholder="Search invoices">
 </div>
 
-<div class="status-item">
-Paid : 30
-</div>
+<div class="invoice-body">
+<button class="submit-invoice" type="button"
+onclick="window.location.href='invoice.html'">Submit Invoice</button>
 
-<div class="status-item">
-Rejected : 0
-</div>
-
-</div>
-
-</div>
-
-<div class="panel">
-
-<h2>Recent Invoices</h2>
-
-<table>
-
+<table class="invoice-table">
+<thead>
 <tr>
-<th>Invoice</th>
+<th>Details</th>
+<th>Bill Number</th>
 <th>Vendor</th>
+<th>Pending With</th>
 <th>Status</th>
 </tr>
-
-<tr>
-<td>INV001</td>
-<td>ABC Logistics</td>
+</thead>
+<tbody id="invoiceRows">
+<tr data-status="pending">
+<td><a href="invoice.html">VI-FMLOG-000037594</a></td>
+<td>5060</td>
+<td>Gurmeet Singh</td>
+<td>Finance Team</td>
 <td><span class="pending">Pending</span></td>
 </tr>
-
-<tr>
-<td>INV002</td>
+<tr data-status="draft">
+<td><a href="invoice.html">VI-FMLOG-000037595</a></td>
+<td>5061</td>
+<td>ABC Logistics</td>
+<td>-</td>
+<td><span class="pending">Draft</span></td>
+</tr>
+<tr data-status="completed">
+<td><a href="invoice.html">VI-FMLOG-000037596</a></td>
+<td>5062</td>
 <td>XYZ Transport</td>
-<td><span class="approved">Approved</span></td>
+<td>-</td>
+<td><span class="approved">Completed</span></td>
 </tr>
-
-<tr>
-<td>INV003</td>
+<tr data-status="completed">
+<td><a href="invoice.html">VI-FMLOG-000037597</a></td>
+<td>5063</td>
 <td>Tech Solutions</td>
-<td><span class="approved">Approved</span></td>
+<td>-</td>
+<td><span class="paid">Paid</span></td>
 </tr>
-
+</tbody>
 </table>
 
+<div class="empty-invoices" id="emptyInvoices">No matching invoices found.</div>
 </div>
 
-</div>
+</section>
 
 <!-- QUICK ACTIONS -->
 
@@ -576,6 +742,80 @@ playNotificationSound();
 }
 
 });
+
+const invoiceTabs = document.querySelectorAll(".invoice-tab");
+const invoiceSearch = document.getElementById("invoiceSearch");
+const invoiceRows = Array.from(
+document.querySelectorAll("#invoiceRows tr")
+);
+const emptyInvoices = document.getElementById("emptyInvoices");
+let activeInvoiceStatus = "pending";
+
+function filterInvoices(){
+const searchText = invoiceSearch.value.trim().toLowerCase();
+let visibleCount = 0;
+
+invoiceRows.forEach(function(row){
+const matchesStatus =
+row.dataset.status === activeInvoiceStatus;
+const matchesSearch =
+row.textContent.toLowerCase().includes(searchText);
+const isVisible = matchesStatus && matchesSearch;
+
+row.style.display = isVisible ? "" : "none";
+if(isVisible) visibleCount++;
+});
+
+emptyInvoices.style.display =
+visibleCount === 0 ? "block" : "none";
+}
+
+invoiceTabs.forEach(function(tab){
+tab.addEventListener("click",function(){
+invoiceTabs.forEach(function(item){
+item.classList.remove("active");
+});
+
+tab.classList.add("active");
+activeInvoiceStatus = tab.dataset.status;
+filterInvoices();
+});
+});
+
+invoiceSearch.addEventListener("input",filterInvoices);
+
+document.getElementById("exportInvoices")
+.addEventListener("click",function(){
+const visibleRows = invoiceRows.filter(function(row){
+return row.style.display !== "none";
+});
+
+const csvRows = [
+["Details","Bill Number","Vendor","Pending With","Status"]
+];
+
+visibleRows.forEach(function(row){
+csvRows.push(Array.from(row.cells).map(function(cell){
+return cell.textContent.trim();
+}));
+});
+
+const csv = csvRows.map(function(row){
+return row.map(function(value){
+return '"' + value.replace(/"/g,'""') + '"';
+}).join(",");
+}).join("\n");
+
+const downloadLink = document.createElement("a");
+downloadLink.href = URL.createObjectURL(
+new Blob([csv],{ type:"text/csv" })
+);
+downloadLink.download = activeInvoiceStatus + "-invoices.csv";
+downloadLink.click();
+URL.revokeObjectURL(downloadLink.href);
+});
+
+filterInvoices();
 
 </script>
 
