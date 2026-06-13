@@ -1,26 +1,42 @@
-| Invoice ID | Vendor        | Invoice Date | Amount  | Submitted By | Branch | Status  | Action |
-| ---------- | ------------- | ------------ | ------- | ------------ | ------ | ------- | ------ |
-| INV001     | ABC Logistics | 12-Jun-2026  | ₹25,000 | Nidhi Gajjar | Mumbai | Pending | Review |
-| INV002     | XYZ Transport | 13-Jun-2026  | ₹18,000 | Rahul Shah   | Pune   | Pending | Review |
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Invoice Approvals</title>
-
 <style>
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:"Segoe UI Variable Text","Segoe UI",sans-serif;
+}
 
 body{
-font-family:'Segoe UI',sans-serif;
-background:#f4f6f9;
+min-height:100vh;
 padding:30px;
+background:
+radial-gradient(circle at 12% 10%,rgba(239,43,45,.1),transparent 28%),
+radial-gradient(circle at 88% 15%,rgba(0,43,127,.12),transparent 30%),
+linear-gradient(135deg,#f7f9fd,#fff9f8);
+color:#171717;
+}
+
+.back-link{
+display:inline-block;
+margin-bottom:18px;
+color:#002b7f;
+font-weight:700;
+text-decoration:none;
 }
 
 .container{
-background:white;
 padding:25px;
-border-radius:12px;
-box-shadow:0 2px 8px rgba(0,0,0,.08);
+border:1px solid rgba(255,255,255,.8);
+border-radius:14px;
+background:rgba(255,255,255,.88);
+box-shadow:0 12px 34px rgba(25,39,67,.1);
+backdrop-filter:blur(14px);
 }
 
 h1{
@@ -28,51 +44,70 @@ margin-bottom:20px;
 color:#002b7f;
 }
 
+.table-wrap{
+overflow-x:auto;
+}
+
 table{
 width:100%;
+min-width:850px;
 border-collapse:collapse;
 }
 
 th{
+padding:13px;
 background:#eef3ff;
-padding:12px;
 text-align:left;
 }
 
 td{
-padding:12px;
+padding:13px;
 border-bottom:1px solid #ddd;
 }
 
+tbody tr{
+transition:background .2s,box-shadow .2s;
+}
+
+tbody tr:hover{
+background:#fafbff;
+box-shadow:inset 3px 0 #ef2b2d;
+}
+
 .review-btn{
-background:#002b7f;
-color:white;
 padding:8px 15px;
-border:none;
+border:0;
 border-radius:6px;
+background:#002b7f;
+color:#fff;
 cursor:pointer;
+transition:transform .2s,box-shadow .2s;
+}
+
+.review-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 7px 15px rgba(0,43,127,.2);
 }
 
 .status{
-background:#fff3cd;
-color:#856404;
+display:inline-block;
 padding:6px 10px;
 border-radius:20px;
+background:#fff3cd;
+color:#856404;
 font-size:12px;
 font-weight:600;
 }
-
 </style>
 </head>
-
 <body>
+<a class="back-link" href="dashboard.html">&larr; Back to portal</a>
 
 <div class="container">
-
 <h1>Invoice Approval Queue</h1>
-
+<div class="table-wrap">
 <table>
-
+<thead>
 <tr>
 <th>Invoice ID</th>
 <th>Vendor</th>
@@ -83,42 +118,33 @@ font-weight:600;
 <th>Status</th>
 <th>Action</th>
 </tr>
-
+</thead>
+<tbody>
 <tr>
 <td>INV001</td>
 <td>ABC Logistics</td>
 <td>12-Jun-2026</td>
-<td>₹25,000</td>
+<td>INR 25,000</td>
 <td>Nidhi Gajjar</td>
 <td>Mumbai</td>
 <td><span class="status">Submitted</span></td>
-<td>
-<button class="review-btn"
-onclick="window.location.href='invoice-review.html'">
-Review
-</button>
-</td>
+<td><button class="review-btn" type="button"
+onclick="window.location.href='invoice-review.html'">Review</button></td>
 </tr>
-
 <tr>
 <td>INV002</td>
 <td>XYZ Transport</td>
 <td>13-Jun-2026</td>
-<td>₹18,000</td>
+<td>INR 18,000</td>
 <td>Rahul Shah</td>
 <td>Pune</td>
 <td><span class="status">Under Review</span></td>
-<td>
-<button class="review-btn"
-onclick="window.location.href='invoice-review.html'">
-Review
-</button>
-</td>
+<td><button class="review-btn" type="button"
+onclick="window.location.href='invoice-review.html'">Review</button></td>
 </tr>
-
+</tbody>
 </table>
-
 </div>
-
+</div>
 </body>
 </html>
