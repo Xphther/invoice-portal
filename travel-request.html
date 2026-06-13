@@ -273,7 +273,9 @@ Employee Information
 type="text"
 id="employeeName"
 placeholder="Enter Employee Name"
-list="employeeList">
+list="employeeList"
+required>
+</div>
 
 <datalist id="employeeList">
 <option value="Amit Sharma">
@@ -319,7 +321,7 @@ readonly>
 <input
 type="text"
 id="costBooking"
-placeholder="Enter Cost Booking">
+required>
 </div>
 
 <div class="field">
@@ -400,17 +402,25 @@ Travel Information
 
 <div class="field">
 <label>Departure Date *</label>
-<input type="date" id="departureDate">
+<input
+type="date"
+id="departureDate"
+required>
 </div>
 
 <div class="field">
 <label>Return Date *</label>
-<input type="date" id="returnDate">
+<input
+type="date"
+id="returnDate"
+required>
 </div>
 
 <div class="field">
 <label>Estimated Travel Cost</label>
-<input type="number">
+<input
+type="number"
+id="estimatedCost">
 </div>
 
 </div>
@@ -427,25 +437,28 @@ Approval & Justification
 
 <div class="field full">
 <label>Business Purpose *</label>
-<textarea></textarea>
+<textarea
+id="businessPurpose"
+required>
+</textarea>
 </div>
 
 <div class="field full">
 <label>Upload Approval Document *</label>
-<input type="file">
+<input type="file" id="approvalFile">
 </div>
 
 </div>
 
 </div>
 
-<button class="submit-btn">
+<button type="submit" class="submit-btn">
 Submit For Approval
 </button>
 
-</div>
-
 </form>
+  
+</div>
   
 <script>
 
@@ -516,8 +529,8 @@ emp.customerNumber;
 
 });
 
-document.querySelector(".submit-btn")
-.addEventListener("click", function(e){
+document.getElementById("travelForm")
+.addEventListener("submit", function(e){
 
 e.preventDefault();
 
