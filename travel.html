@@ -140,28 +140,63 @@ Request ID : TRV-2026-001
 <div class="form-grid">
 
 <div class="field">
-<label>Employee Name</label>
-<input type="text">
+<label>Employee Name *</label>
+<input type="text" required>
 </div>
 
 <div class="field">
-<label>Employee ID</label>
-<input type="text">
+<label>Employee ID *</label>
+<input type="text" required>
 </div>
 
 <div class="field">
-<label>From Location</label>
-<input type="text">
+<label>Location *</label>
+<select required>
+<option value="">Select Location</option>
+<option>Mumbai</option>
+<option>Pune</option>
+<option>Delhi</option>
+<option>Bangalore</option>
+<option>Chennai</option>
+<option>Hyderabad</option>
+</select>
 </div>
 
 <div class="field">
-<label>To Location</label>
-<input type="text">
+<label>Department *</label>
+<input type="text" required>
 </div>
 
 <div class="field">
-<label>Travel Type</label>
-<select>
+<label>Cost Center *</label>
+<select required>
+<option value="">Select Cost Center</option>
+<option>CC1001 - Operations</option>
+<option>CC1002 - Transport</option>
+<option>CC1003 - Warehouse</option>
+<option>CC1004 - Corporate</option>
+</select>
+</div>
+
+<div class="field">
+<label>Reporting Manager *</label>
+<input type="text" required>
+</div>
+
+<div class="field">
+<label>Customer Name *</label>
+<input type="text" required>
+</div>
+
+<div class="field">
+<label>Customer Unique Number *</label>
+<input type="text" placeholder="CUS-0001" required>
+</div>
+
+<div class="field">
+<label>Travel Type *</label>
+<select required>
+<option value="">Select Travel Type</option>
 <option>Flight</option>
 <option>Train</option>
 <option>Cab</option>
@@ -169,34 +204,63 @@ Request ID : TRV-2026-001
 </div>
 
 <div class="field">
-<label>Purpose</label>
-<input type="text">
+<label>From Location *</label>
+<input type="text" required>
 </div>
 
 <div class="field">
-<label>Departure Date</label>
-<input type="date">
+<label>To Location *</label>
+<input type="text" required>
 </div>
 
 <div class="field">
-<label>Return Date</label>
-<input type="date">
+<label>Departure Date *</label>
+<input type="date" required>
+</div>
+
+<div class="field">
+<label>Return Date *</label>
+<input type="date" required>
+</div>
+
+<div class="field">
+<label>Estimated Travel Cost (₹) *</label>
+<input type="number" required>
+</div>
+
+<div class="field">
+<label>Travel Advance Required *</label>
+<select required>
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+</select>
+</div>
+  
+<div class="field">
+<label>Mode Preference *</label>
+<select required>
+<option value="">Select</option>
+<option>Economy</option>
+<option>Premium Economy</option>
+<option>Business Class</option>
+</select>
 </div>
 
 <div class="field full">
-<label>Travel Remarks</label>
-<textarea></textarea>
+<label>Business Purpose / Travel Justification *</label>
+<textarea required></textarea>
 </div>
 
 <div class="field full">
-<label>Upload Approval Document</label>
-<input type="file">
+<label>Upload Approval Document *</label>
+<input type="file" required>
 </div>
 
 </div>
 
 <button class="submit-btn">
-Submit Travel Request
+Submit For Approval
 </button>
 
 </div>
