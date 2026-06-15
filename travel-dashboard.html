@@ -153,7 +153,10 @@ table.innerHTML += `
 <td>${req.pendingWith || "-"}</td>
 <td>
 <button onclick="approveRequest(${index})">
-Approve
+Manager Approve
+</button>
+<button onclick="mdApprove(${index})">
+MD Approve
 </button>
 </td>
 </tr>
@@ -187,7 +190,21 @@ JSON.stringify(requests)
 location.reload();
 
 }
+function mdApprove(index){
 
+const requests =
+JSON.parse(localStorage.getItem("travelRequests")) || [];
+
+requests[index].pendingWith = "Admin Team";
+
+localStorage.setItem(
+"travelRequests",
+JSON.stringify(requests)
+);
+
+location.reload();
+
+}
 </script>  
   
 </body>
