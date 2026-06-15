@@ -610,6 +610,17 @@ alert(
 "Travel Request Submitted Successfully"
 );
 
+document.getElementById("travelForm").reset();
+
+document.getElementById("employeeId").value = "";
+document.getElementById("location").value = "";
+document.getElementById("department").value = "";
+document.getElementById("costCenter").value = "";
+document.getElementById("reportingManager").value = "";
+document.getElementById("reportingDirector").value = "";
+document.getElementById("customerName").value = "";
+document.getElementById("CustomerUniqueNumber").value = "";
+
 window.location.href =
 "travel-dashboard.html";
 
