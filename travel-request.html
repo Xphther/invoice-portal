@@ -465,11 +465,22 @@ Submit For Approval
   
 <script>
 
-const randomNo =
-Math.floor(1000 + Math.random() * 9000);
+let lastNo =
+localStorage.getItem("travelLastNumber") || 0;
+
+lastNo++;
+
+localStorage.setItem(
+"travelLastNumber",
+lastNo
+);
+
+const requestNumber =
+"FM-2026-" +
+String(lastNo).padStart(4,"0");
 
 document.getElementById("requestId").innerHTML =
-"TRV-" + randomNo;
+requestNumber;
 
 const employees = {
 
