@@ -101,18 +101,22 @@ padding:30px;
 const table =
 document.getElementById("requestTable");
 
-let found = false;
+const requests =
+JSON.parse(localStorage.getItem("travelRequests")) || [];
 
-for(let i=0;i<localStorage.length;i++){
+if(requests.length === 0){
 
-const key = localStorage.key(i);
+table.innerHTML = `
+<tr>
+<td colspan="6" class="no-data">
+No Travel Requests Found
+</td>
+</tr>
+`;
 
-if(key.startsWith("TRV-")){
+}else{
 
-found = true;
-
-const req =
-JSON.parse(localStorage.getItem(key));
+requests.forEach(req => {
 
 table.innerHTML += `
 <tr>
@@ -125,19 +129,7 @@ table.innerHTML += `
 </tr>
 `;
 
-}
-
-}
-
-if(!found){
-
-table.innerHTML = `
-<tr>
-<td colspan="6" class="no-data">
-No Travel Requests Found
-</td>
-</tr>
-`;
+});
 
 }
 
