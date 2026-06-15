@@ -110,6 +110,7 @@ padding:30px;
 <th>Travel Type</th>
 <th>Status</th>
 <th>Pending With</th>
+<th>Action</th>
 </tr>
 </thead>
 
@@ -131,7 +132,7 @@ if(requests.length === 0){
 
 table.innerHTML = `
 <tr>
-<td colspan="6" class="no-data">
+<td colspan="8" class="no-data">
 No Travel Requests Found
 </td>
 </tr>
@@ -139,7 +140,7 @@ No Travel Requests Found
 
 }else{
 
-requests.forEach(req => {
+requests.forEach((req,index) => {
 
 table.innerHTML += `
 <tr>
@@ -149,7 +150,12 @@ table.innerHTML += `
 <td>${req.toLocation}</td>
 <td>${req.travelType}</td>
 <td class="pending">${req.status}</td>
-<td>${req.pendingWith || "Reporting Manager"}</td>
+<td>${req.pendingWith || "-"}</td>
+<td>
+<button onclick="approveRequest(${index})">
+Approve
+</button>
+</td>
 </tr>
 `;
 
@@ -157,7 +163,32 @@ table.innerHTML += `
 
 }
 
-</script>
+function approveRequest(index){
 
+const requests =
+JSON.parse(localStorage.getItem("travelRequests")) || [];
+
+if(requests[index].pendingWith === "Reporting Manager"){
+
+requests[index].pendingWith = "Admin Team";
+
+}else{
+
+requests[index].status = "Approved";
+requests[index].pendingWith = "Completed";
+
+}
+
+localStorage.setItem(
+"travelRequests",
+JSON.stringify(requests)
+);
+
+location.reload();
+
+}
+
+</script>  
+  
 </body>
 </html>
