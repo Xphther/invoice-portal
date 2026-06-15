@@ -248,7 +248,9 @@ gap:15px;
 ← Travel Dashboard
 </a>
 
-<div class="request-id" id="requestId"></div>
+<div class="request-id" id="requestId">
+Loading...
+</div>
 
 </div>
 
@@ -463,22 +465,15 @@ Submit For Approval
   
 <script>
 
-let lastNo =
-localStorage.getItem("travelLastNumber") || 0;
+const lastNo =
+parseInt(localStorage.getItem("travelLastNumber")) || 0;
 
-lastNo++;
-
-localStorage.setItem(
-"travelLastNumber",
-lastNo
-);
-
-const requestNumber =
+const previewNumber =
 "FM-2026-" +
-String(lastNo).padStart(4,"0");
+String(lastNo + 1).padStart(4,"0");
 
-document.getElementById("requestId").innerHTML =
-requestNumber;
+document.getElementById("requestId").innerText =
+previewNumber;
 
 const employees = {
 
@@ -545,11 +540,22 @@ document.getElementById("travelForm")
 .addEventListener("submit", function(e){
 
 e.preventDefault();
+let newNo =
+parseInt(localStorage.getItem("travelLastNumber")) || 0;
 
+newNo++;
+
+localStorage.setItem(
+"travelLastNumber",
+newNo
+);
+
+const requestNumber =
+"FM-2026-" +
+String(newNo).padStart(4,"0");
 const request = {
 
-requestId:
-document.getElementById("requestId").innerText,
+requestId: requestNumber,
 
 employeeName:
 document.getElementById("employeeName").value,
@@ -586,7 +592,7 @@ document.getElementById("estimatedCost").value,
 
 status:"Pending",
 pendingWith:"Reporting Manager",
-alternateApprover:"Managing Director""
+alternateApprover:"Managing Director"
   
 };
 
